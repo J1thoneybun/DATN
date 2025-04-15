@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Đặt lại mật khẩu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div id="nivoslider" class="slides nivoSlider">
+        <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+        <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+            <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:130px; left:0px;">
+                <nav aria-label="breadcrumbs" class="rank-math-breadcrumb">
+                    <p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">ĐẶT LẠI MẬT KHẨU</span></p>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+    @using (Html.BeginForm("DatLaiMatKhau", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("code", (string)ViewBag.ResetCode)
+
+        <div class="form-horizontal">
+            <div class="text-center">
+                <h1 class="div_head text-center cl_head text-uppercase font_hel sz_24 mb_15 pb_15">
+                    Đặt lại mật khẩu
+                </h1>
+                <h3 style="color:red;">@ViewBag.Message</h3>
+            </div>
+
+            <center>
+                <div class="">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="newPassword">Mật khẩu mới</label>
+                        <div class="col-md-10">
+                            <input type="password" name="newPassword" id="newPassword" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Đặt lại mật khẩu" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    }
+</div>

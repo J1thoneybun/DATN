@@ -1,0 +1,116 @@
+﻿
+@model WebAppYte.Models.BenhNhan
+
+@{ ViewBag.Title = "Dangky";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<div class="col-md-12">
+
+    <div id="nivoslider" class="slides nivoSlider">
+
+        <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+        <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+            <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:130px; left:0px;">
+                <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">ĐĂNG KÝ</span></p></nav>
+            </div>
+
+        </div>
+    </div>
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+  
+            <div class="form-horizontal">
+                <div class="text-center">
+                    <h1 class="div_head text-center cl_head text-uppercase font_hel sz_24 mb_15  pb_15">
+                        Đăng ký
+                    </h1>
+                    <h3 style="color:red;">@ViewBag.loi</h3>
+                </div>
+                <center>
+                    <div class="">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+
+                            @Html.LabelFor(model => model.tenbn, "Họ tên", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.tenbn, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.tenbn, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.sdt, "Số điện thoại", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.sdt, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.sdt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.diachi, "Địa chỉ", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.diachi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.diachi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ngaysinh, "Ngày sinh", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" data-val-date="The field Bắt đầu must be a date." id="ngaysinh" name="ngaysinh" type="date" data-date="" data-date-format="DD/MMMM/YYYY" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="ngaysinh" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.gioitinh, "Giới tính", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <select class="form-control" id="gioitinh" name="gioitinh">
+
+                                    <option>Nam</option>
+                                    <option>Nữ</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.gioitinh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.tendn, "Tên đăng nhập", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.tendn, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.tendn, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.mk, "Mật khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.mk, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.mk, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Đăng ký" class="btn btn-danger" />
+                            </div>
+                        </div>
+                    </div>
+                </center>
+            </div>
+
+    }
+</div>
+
+

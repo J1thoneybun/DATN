@@ -1,0 +1,19 @@
+﻿
+
+@media (min-width: 990px) {
+    .navbar-nav .dropdown-menu .caret {
+        transform: rotate(-90deg);
+    }
+}
+
+.MauchuMenu {
+    color: blue;
+}
+
+.navbar-brand {
+    color: #AAAAAA;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: blue;
+    font-size: medium;
+}

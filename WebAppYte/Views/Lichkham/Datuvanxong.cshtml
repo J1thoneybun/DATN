@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<WebAppYte.DAO.LichKham>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var u = Session["user"] as WebAppYte.Models.BenhNhan;
+}
+<style type="text/css">
+    .imgavt {
+        margin-right: 15px;
+    }
+</style>
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">LỊCH KHÁM</span></p></nav>
+        </div>
+
+    </div>
+</div>
+<h2>Lịch khám của bạn</h2>
+<h4><i> Chú ý : Thời gian tư vấn tối đa cho mỗi lần tư vấn là : 120 phút</i></h4>
+
+<div>
+    <button type="button" class="btn btn-warning"
+            onclick="location.href='@Url.Action("Create", "LichKham")'">
+        Đặt mới
+    </button>
+    <button type="button" class="btn btn-default"
+            onclick="location.href='@Url.Action("Dangxuly", "LichKham", new { id = u.mabn })'">
+        Đang xác nhận
+    </button>
+    <button type="button" class="btn btn-default"
+            onclick="location.href='@Url.Action("Daxacnhan", "LichKham", new { id = u.mabn })'">
+        Đã xác nhận
+    </button>
+    <button type="button" class="btn btn-default"
+            onclick="location.href='@Url.Action("Datuvanxong", "LichKham", new { id = u.mabn })'">
+        Đã xong
+    </button>
+</div>
+<br />
+<hr />
+<div style="float:left;">
+    <div class="col-md-8">
+        @foreach (var item in Model)
+        {
+            string imagePath = "~/images/images/avatar.jpg"; // Ảnh mặc định
+            if (!string.IsNullOrEmpty(item.anh))
+            {
+                imagePath = item.anh;
+            }
+
+            <div class="appointment-item" style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; overflow: hidden;">
+                <img class="imgavt" src="~/images/images/@item.anh"
+                     alt="Bác sĩ @item.hoten"
+                     width="200" height="200"
+                     style="float: left; margin-right: 15px; border-radius: 50%; object-fit: cover;" />
+
+                <div style="float: left; width: calc(100% - 215px);">
+                    <b>Người đặt lịch: @item.tenbn</b> <br />
+                    <h4>Bác sĩ tư vấn: @item.hoten</h4>
+                    <h4>Ngày hẹn: @item.ngaykham.ToString("dd/MM/yyyy") </h4>
+                    <h4>Ca khám: @item.ca </h4>
+                    <h4>Lý do : @item.mota</h4>
+
+                    @if (item.ngaykham < DateTime.Now && item.trangthai == 0)
+                    {
+                        <h5 style="color:blueviolet"> Đang chờ xác nhận. </h5>
+                        <button>
+                            @Html.ActionLink("Xóa lịch", "Delete", new { id = item.madat })
+                        </button>
+                        <hr />
+                    }
+                    else if (item.trangthai == 1)
+                    {
+                        <h5 style="color:red"> Đã xác nhận lịch </h5>
+                        <button>
+                            @Html.ActionLink("Xóa lịch", "Delete", new { id = item.madat })
+                        </button>
+                        <hr />
+                    }
+                    else if (item.trangthai == 2 || item.trangthai == 4)
+                    {
+                        <h5 style="color:red"> Đã tư vấn xong. </h5><br />
+                        {
+                            <a class="btn-default" href="@Url.Action("DanhGia", "LichKham", new { id = u.mabn, fi = item.mand, madat = item.madat })">Đánh giá</a>
+                        }
+                    }
+                    else
+                    {
+                        <h5 style="color:red"> Lỗi </h5>
+                    }
+                    <br />
+                    <br />
+                </div>
+                <hr />
+            </div>
+        }
+        <br />
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Datuvanxong", "LichKham", new { id = ViewBag.id, page = page }))
+    </div>
+</div>

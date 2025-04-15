@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebAppYte.Models.BaiViet>
+
+@{ ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+ }
+@{ var u = Session["userAdmin"] as WebAppYte.Models.NguoiDung; }
+
+
+
+<h3> Quản lý tin tức</h3>
+<p>
+    <h4><button class="btn-default">@Html.ActionLink("Thêm bài viết", "Create", new { id = u.mand })</button></h4>
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Tiêu dề
+        </th>
+        @*<th>
+               Nội dung
+            </th>*@
+        <th>
+            Hình ảnh
+        </th>
+        <th>
+            Mô tả
+        </th>
+        <th>
+            Loại
+        </th>
+        <th>
+            Ngày đăng
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.tieude)
+    </td>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.noidung)
+        </td> *@
+<td>
+    <img class="img-responsive " loading="lazy" src="~/images/images/@item.hinhanh" style="width:150px;height:150px;">
+</td>
+    <td>
+        @Html.DisplayFor(modelItem => item.mota)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Loai.tenloai)
+    </td>
+
+
+    <td>
+        @if (item.ngaydang.HasValue)
+        {
+            @item.ngaydang.Value.ToString("dd/MM/yyyy")
+        }
+        else
+        {
+            <span>Chưa có ngày đăng</span>
+        }
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.mabv}) |
+        @Html.ActionLink("Details", "Details", new { id = item.mabv }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.mabv })
+    </td>
+</tr>
+}
+
+</table>

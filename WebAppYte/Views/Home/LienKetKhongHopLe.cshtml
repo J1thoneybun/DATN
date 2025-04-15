@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Liên kết không hợp lệ";
+}
+
+<div class="alert alert-danger mt-3">
+    <h3>Mã khôi phục không hợp lệ hoặc đã hết hạn!</h3>
+    <p>Vui lòng yêu cầu khôi phục mật khẩu lại từ đầu.</p>
+    <a href="@Url.Action("QuenMatKhau", "Home")" class="btn btn-warning">Thử lại</a>
+</div>

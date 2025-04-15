@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebAppYte.Models.Khoa>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Khoa
+        </th>
+        <th>
+            Mô tả
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tenkhoa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mota)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.makhoa }) |
+            @Html.ActionLink("Details", "Details", new { id=item.makhoa }) |
+          
+        </td>
+    </tr>
+}
+
+</table>

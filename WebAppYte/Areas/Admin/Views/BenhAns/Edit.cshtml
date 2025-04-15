@@ -1,0 +1,275 @@
+﻿@model WebAppYte.Models.BenhAn
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.maba)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tieude, "Tiêu đề", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tieude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tieude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mabs, "Bác sĩ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.mabs,
+                    new SelectList(ViewData["bacsis"] as List<WebAppYte.Models.NguoiDung>, "mand", "hoten", Model.mabs),
+                    htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.mabs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @{
+            var listBN = ViewData["benhnhans"] as List<WebAppYte.Models.BenhNhan>;
+            var currentPatient = listBN?.FirstOrDefault(x => x.mabn == Model.mabn);
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mabn, "Bệnh nhân", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.mabn,
+                    new SelectList(listBN, "mabn", "tenbn", Model.mabn),
+                    htmlAttributes: new { @class = "form-control", @onchange = "selectedValue(this)" })
+                @Html.ValidationMessageFor(model => model.mabn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    
+    <div class="form-group">
+        <label class="control-label col-md-1">Họ tên: </label>
+        <span id="hoten">@listBN[0].tenbn</span>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-1">Ngày sinh: </label>
+        <span id="ngaysinh">@listBN[0].ngaysinh.Value.ToString("dd/MM/yyyy")</span>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-1">Địa chỉ: </label>
+        <span id="diachi">@listBN[0].diachi</span>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.ngaykham, "Ngày khám", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ngaykham, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.ngaykham, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.giokham, "Giờ khám", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.giokham, new { htmlAttributes = new { @class = "form-control", @type = "time" } })
+                @Html.ValidationMessageFor(model => model.giokham, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-4">
+            @Html.LabelFor(model => model.mach, "Mạch", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mach, new { htmlAttributes = new { @class = "form-control", @type = "number", @step = "0.01" } })
+                @Html.ValidationMessageFor(model => model.mach, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-4">
+            @Html.LabelFor(model => model.nhietdo, "Thân nhiệt", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nhietdo, new { htmlAttributes = new { @class = "form-control", @type = "number", @step = "0.01" } })
+                @Html.ValidationMessageFor(model => model.nhietdo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-4">
+            @Html.LabelFor(model => model.nhiptho, "Nhịp thở", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nhiptho, new { htmlAttributes = new { @class = "form-control", @type = "number", @step = "0.01" } })
+                @Html.ValidationMessageFor(model => model.nhiptho, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-4">
+            @Html.LabelFor(model => model.chieucao, "Cao (m)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.chieucao, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                    @id = "chieucao",
+                    @oninput = "onCalculateBMI()",
+                    @type = "number",
+                    @step = "0.01"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.chieucao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-4">
+            @Html.LabelFor(model => model.cannang, "Nặng (kg)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cannang, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                    @id = "cannang",
+                    @oninput = "onCalculateBMI()",
+                    @type = "number",
+                    @step = "0.01"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.cannang, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-4">
+            @Html.LabelFor(model => model.bmi, "BMI", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bmi, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                    @id = "bmi",
+                    @readonly = "readonly"
+                    }
+                })
+                @Html.ValidationMessageFor(model => model.bmi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.thiluctrai, "Mắt trái", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.thiluctrai, new { htmlAttributes = new { @class = "form-control", @min = 1, @max = 10 } })
+                @Html.ValidationMessageFor(model => model.thiluctrai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.thilucphai, "Mắt phải", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.thilucphai, new { htmlAttributes = new { @class = "form-control", @min = 1, @max = 10 } })
+                @Html.ValidationMessageFor(model => model.thilucphai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.nhanapP, "Nhãn áp P", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nhanapP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nhanapP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.nhanapT, "Nhãn áp T", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nhanapT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nhanapT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.chuandoan, "Chuẩn đoán lâm sàng", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.chuandoan, new { @class = "form-control", @rows = 3 })
+            @Html.ValidationMessageFor(model => model.chuandoan, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ketqua, "Kết quả", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.ketqua, new { @class = "form-control", @rows = 3 })
+            @Html.ValidationMessageFor(model => model.ketqua, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+            // Format date for datepicker
+            var ngaykham = '@Model.ngaykham.ToString("yyyy-MM-dd")';
+            if (ngaykham) {
+                $("#ngaykham").val(ngaykham);
+            }
+
+            // Format time for timepicker
+            var giokham = '@Model.giokham.ToString(@"hh\:mm")';
+            if (giokham) {
+                $("#giokham").val(giokham);
+            }
+
+            // Calculate initial BMI
+            onCalculateBMI();
+        });
+
+        function onCalculateBMI() {
+            // Đảm bảo luôn parse sang số
+            const height = parseFloat($("#chieucao").val()) || 0;
+            const weight = parseFloat($("#cannang").val()) || 0;
+
+            // Tính toán và làm tròn 1 chữ số thập phân
+            const bmi = Math.round((weight / (height * height)) * 10) / 10;
+
+            // Gán giá trị vào input (đảm bảo dạng số, không phải string)
+            $("#bmi").val(bmi);
+        }
+
+
+        function selectedValue(ddlObject) {
+            var id = ddlObject.value;
+            var obj = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewData["benhnhans"],
+                           new Newtonsoft.Json.JsonSerializerSettings
+                           {
+                               ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                           }));
+            if (obj) {
+                var benhnhan = obj.find(x => x.mabn == id);
+                if (benhnhan) {
+                    $("#hoten").text(benhnhan.tenbn);
+                    $("#ngaysinh").text(new Date(benhnhan.ngaysinh).toLocaleDateString());
+                    $("#diachi").text(benhnhan.diachi);
+                }
+            }
+        }
+    </script>
+}

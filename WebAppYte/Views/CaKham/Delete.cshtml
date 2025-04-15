@@ -1,0 +1,102 @@
+﻿﻿
+@model WebAppYte.Models.CaKham
+
+<script src="~/Common/ckeditor/ckeditor.js"></script>
+<script src="~/Common/ckfinder/ckfinder.js"></script>
+<script src="~/Scripts/jquery-3.4.1.slim.js"></script>
+
+@{ ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userBS = Session["userBS"] as WebAppYte.Models.NguoiDung;
+}
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:165px; left:170px;">
+
+            <h2>Bạn thực sự muốn xóa?</h2>
+        </div>
+
+    </div>
+
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        @Html.HiddenFor(model => model.maca)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ngaykham, "Ngày khám", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" data-val="true" data-val-date="The field must be a date." id="ngaykham" name="ngaykham" type="date" value="@ViewBag.ngay" readonly disabled="disabled" />
+                <span class="field-validation-valid text-danger" data-valmsg-for="ngaykham" data-valmsg-replace="true"></span>
+            </div>
+            @Html.ValidationMessageFor(model => model.ngaykham, "", new { @class = "text-danger" })
+        </div>
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.hinhthuc, "Hình thức", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.hinhthuc)
+                <input type="text" class="form-control" disabled="disabled" value="@Model.hinhthuc" />
+                @Html.ValidationMessageFor(model => model.hinhthuc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ca, "Ca khám", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" readonly>
+                @Html.HiddenFor(model => model.ca)
+                <input type="text"
+                       class="form-control"
+                       disabled="disabled"
+                       value="@Model.ca" />
+                @Html.ValidationMessageFor(model => model.ca, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Delete" class="btn btn-default" />
+            </div>
+        </div>
+    </div>}
+
+<script language="javascrip" type="text/javascript">
+    $(function () {
+        $("#chonDuongDanAnh").click(function () {
+            var ckfiner = new CKFinder();
+            ckfiner.selectActionFunction = function (fileUrl) {
+                $("#Hinhanh").val(fileUrl);
+            };
+            ckfiner.popup();
+        })
+    });
+
+
+    var ckeditor;
+    function createEditor(languageCode, id) {
+        var editor = CKEDITOR.replace(id, { language: languageCode });
+    }
+    $(function () { createEditor('vi', 'Noidung') });</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<div>
+    <a style="" href="@Url.Action("Index", "CaKham", new { id = userBS.mand })"> Back to list</a>
+</div>

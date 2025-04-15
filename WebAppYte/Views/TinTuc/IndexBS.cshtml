@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebAppYte.Models.BaiViet>
+@using PagedList.Mvc;
+@using PagedList;
+@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var u = Session["userBS"] as WebAppYte.Models.NguoiDung;}
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:165px; left:170px;">
+
+            <h2>Bài viết</h2>
+        </div>
+
+    </div>
+
+</div>
+
+<p>
+    <h4><button class="btn-default">@Html.ActionLink("Thêm bài viết", "Create", new { id = @ViewBag.id})</button></h4>
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Tiêu dề
+        </th>
+        <th>
+            Hình ảnh
+        </th>
+        <th>
+            Mô tả
+        </th>
+        <th>
+            Loại
+        </th>
+        <th>
+            Ngày đăng
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.tieude)
+    </td>
+<td>
+    <img class="img-responsive " loading="lazy" src="~/images/images/@item.hinhanh" style="width:150px;height:150px;">
+</td>
+    <td>
+        @Html.DisplayFor(modelItem => item.mota)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Loai.tenloai)
+    </td>
+
+
+    <td>
+      @item.ngaydang.Value.ToString("dd/MM/yyyy")
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.mabv }) |
+        @Html.ActionLink("Details", "Details", new { id = item.mabv }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.mabv })
+    </td>
+</tr>
+}
+
+</table>

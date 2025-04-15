@@ -1,0 +1,83 @@
+﻿@model IEnumerable<WebAppYte.DAO.LichKham>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Bệnh nhân
+        </th>
+        <th>
+            Ngày sinh
+        </th>
+
+        <th>
+            Số điện thoại
+        </th>
+        <th>
+           Ngày khám
+        </th>
+        <th>
+            Ca khám
+        </th>
+
+        <th>
+            Hình thức
+        </th>
+        <th>
+            Lý do
+        </th>
+        <th>
+            Bác sĩ
+        </th>
+        <th>
+            Trạng thái
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.tenbn)
+    </td>
+    <td>
+        @item.ngaysinh.ToString("dd/MM/yyyy")
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.sdt)
+    </td>
+    <td>
+        @item.ngaykham.ToString("dd/MM/yyyy")
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.ca)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.hinhthuc)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.mota)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.hoten)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.trangthai)
+    </td>
+
+    <td>
+
+
+        @Html.ActionLink("Delete", "Delete", new { id = item.madat })
+    </td>
+</tr>
+}
+
+</table>

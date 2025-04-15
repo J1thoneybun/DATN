@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WebAppYte.Models.BenhNhan>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>QUẢN LÝ BỆNH NHÂN</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Họ tên
+        </th>
+        <th>
+          Số điện thoại
+        </th>
+        <th>
+            Email
+       
+        </th>
+        <th>
+          Địa chỉ
+        </th>
+        <th>
+           Ngày sinh
+        </th>
+        <th>
+           Giới tính
+        </th>
+        <th>
+           Tên đăng nhập
+        </th>
+        <th>
+          Mật khẩu
+        </th>
+      
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tenbn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sdt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.diachi)
+        </td>
+        <td>
+            @item.ngaysinh.Value.ToString("dd/MM/yyyy")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gioitinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tendn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mk)
+       
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.mabn }) |
+            @Html.ActionLink("Details", "Details", new { id=item.mabn }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.mabn})
+        </td>
+    </tr>
+}
+
+</table>

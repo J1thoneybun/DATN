@@ -1,0 +1,67 @@
+﻿@model WebAppYte.Models.HoiDap
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HoiDap</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BenhNhan.tenbn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BenhNhan.tenbn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NguoiDung.tendn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiDung.tendn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hoi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hoi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ngayhoi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngayhoi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.trangthai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.trangthai)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ma}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

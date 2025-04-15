@@ -1,0 +1,56 @@
+﻿@model IEnumerable<WebAppYte.Models.HoiDap>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Quản lý hỏi đáp</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Người hỏi</th>
+        <th>Người trả lời</th>
+        <th>Câu hỏi</th>
+        <th>Trả lời</th>
+        <th>Ngày hỏi</th>
+        <th>Ngày trả lời</th>
+        <th>Trạng thái</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.BenhNhan.tenbn)</td>
+            <td>@Html.DisplayFor(modelItem => item.NguoiDung.hoten)</td>
+            <td>@Html.DisplayFor(modelItem => item.hoi)</td>
+            <td>@Html.DisplayFor(modelItem => item.dap)</td>
+            <td>@item.ngayhoi.Value.ToString("dd/MM/yyyy")</td>
+
+            <td>
+                @if (item.trangthai == 1)
+                {
+                    @item.ngaytl.Value.ToString("dd/MM/yyyy")
+                }
+            </td>
+
+            <td>
+                @if (item.trangthai == 0)
+                {
+                    <h5 style="color:red">Chưa trả lời</h5>
+                }
+                else
+                {
+                    <h5 style="color:green">Đã trả lời</h5>
+                }
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ma }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ma }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ma })
+            </td>
+        </tr>
+    }
+</table>

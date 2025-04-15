@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - Admin</title>
+    <link href="~/Common/layoutAdmin/css/styles.css" rel="stylesheet" />
+    <link href="~/Common/Icon/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+
+    <style type="text/css">
+        .menu1 {
+            color: white;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+@{
+    var u = Session["userAdmin"] as WebAppYte.Models.NguoiDung;
+}
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-success">
+        <a class="navbar-brand" href="@Url.Action("Index", "HomeAdmin")">Trang quản lý</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        @if (u != null)
+        {
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div>
+                    <h4 style="color:orangered">HI: @u.tendn</h4>
+                </div>
+            </form>
+        }
+        else
+        {
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div>
+                    <h4 style="color:orangered"> Chưa đăng nhập</h4>
+                </div>
+            </form>
+        }
+
+        <!-- Navbar-->
+        <ul class="navbar-nav ml-auto ml-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    @if (u != null)
+                    {
+                        <a class="dropdown-item" href="@Url.Action("DangxuatAd", "HomeAdmin")">Đăng xuất</a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="/Home/Dangnhap">Đăng nhập</a>
+                    }
+
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading" style="color:white"> <h5>Quản lý</h5></div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Quản lý Tài khoản
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="@Url.Action("Index", "QuanTris")"> Quản lý bác sĩ</a>
+                                <a class="nav-link" href="@Url.Action("Index", "NguoiDungs")">Quản lý bệnh nhân</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Quản lý danh mục
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="@Url.Action("Index", "BenhAns")">Quản lý bệnh án</a>
+                                <a class="nav-link" href="@Url.Action("Index", "HoiDaps")"> Quản lý hỏi đáp</a>
+                                <a class="nav-link" href="@Url.Action("Index", "LichKhams")">Quản lý lịch khám</a>
+                                <a class="nav-link" href="@Url.Action("Index", "TinTucs")"> Quản lý tin tức </a>
+                                <a class="nav-link" href="@Url.Action("Index", "QuanTriDanhGias")"> Quản lý đánh giá </a>
+                                <a class="nav-link">Quản lý thống kê</a>
+                                <ul>
+
+                                    <li><a class="nav-link" href="@Url.Action("ThongKeDatLich", "Reports")"> Quản lý lịch khám </a></li>
+                                    <li><a class="nav-link" href="@Url.Action("ThongKeSoSao", "Reports")"> Quản lý số sao đánh giá </a></li>
+                                    <li><a class="nav-link" href="@Url.Action("ThongKeHoiDap", "Reports")"> Quản lý lượt hỏi đáp </a></li>
+                                </ul>
+
+
+
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Admin
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; HVNH 2025</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="~/Areas/Assets/dist/js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="~/Areas/Assets/dist/assets/demo/chart-area-demo.js"></script>
+    <script src="~/Areas/Assets/dist/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="~/Common/layoutAdmin/js/scripts.js"></script>
+    <!-- Scroll To Top Button-->
+    <button id="scrollToTopBtn" class="btn-scroll-top" title="Lên đầu trang">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var scrollBtn = document.getElementById("scrollToTopBtn");
+
+            // Hiện nút khi cuộn xuống >200px
+            window.addEventListener("scroll", function () {
+                if (window.pageYOffset > 200) {
+                    scrollBtn.classList.add("show");
+                } else {
+                    scrollBtn.classList.remove("show");
+                }
+            });
+
+            // Khi click, cuộn mượt về top
+            scrollBtn.addEventListener("click", function () {
+                window.scrollTo({ top: 0, behavior: "smooth" }); // smooth scroll :contentReference[oaicite:0]{index=0}
+            });
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+<style>
+    /* Nút scroll to top */
+    .btn-scroll-top {
+        display: none; /* Ẩn mặc định */
+        position: fixed; /* Cố định trong viewport */
+        bottom: 30px; /* Cách đáy 30px */
+        right: 30px; /* Cách phải 30px */
+        width: 50px;
+        height: 50px; /* Kích thước */
+        background-color: rgba(0,0,0,0.5);
+        color: #fff;
+        border: none;
+        border-radius: 50%; /* Tròn */
+        cursor: pointer;
+        transition: opacity 0.4s, visibility 0.4s; /* Fade in/out :contentReference[oaicite:1]{index=1} */
+        opacity: 0;
+        visibility: hidden;
+    }
+
+        /* Khi cuộn đủ để hiện */
+        .btn-scroll-top.show {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hover effect */
+        .btn-scroll-top:hover {
+            background-color: rgba(0,0,0,0.7);
+        }
+</style>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebAppYte.Models.DanhGia>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+<h2>QUẢN LÝ ĐÁNH GIÁ</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nội dung</th>
+            <th>Ngày đánh giá</th>
+            <th>Mã ND</th>
+            <th>Mã BN</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.noidung
+                </td>
+                <td>
+                    @item.ngay.Value.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mabn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rating)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

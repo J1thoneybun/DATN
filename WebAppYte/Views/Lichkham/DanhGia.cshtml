@@ -1,0 +1,190 @@
+﻿
+@model WebAppYte.Models.DanhGia
+
+<script src="~/Common/ckeditor/ckeditor.js"></script>
+<script src="~/Common/ckfinder/ckfinder.js"></script>
+<script src="~/Scripts/jquery-3.4.1.slim.js"></script>
+
+@{ ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="text" value="@ViewBag.mand ?? " Bác sĩ không xác định id="bacsi" name="bacsi" style="border:1px solid #ccc;width:500px; height:35px;" />
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:165px; left:170px;">
+
+            <h2>Đánh giá</h2>
+        </div>
+
+    </div>
+
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.mand, "Bác sĩ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="text" value="@ViewBag.mand" id="bacsi" name="bacsi" readonly="readonly" style="border:1px solid #ccc;width:500px; height:35px;" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.noidung, "Nội dung", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <textarea cols="20" htmlattributes="{ class = form-control }" id="noidung" name="noidung" rows="2" style="width: 100%; color:black; max-width: 500px;"></textarea>
+            <span class="field-validation-valid text-danger" data-valmsg-for="noidung" data-valmsg-replace="true"></span>
+        </div>
+
+    </div>
+
+    <a>Hãy đánh giá chất lượng phục vụ của bác sĩ để chúng tôi có thể phục vụ tốt hơn:</a>
+    <div class="star-rating">
+        <label class="star-line" data-stars="5">
+            <input type="radio" name="rating" value="5">
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span>Rất tốt</span>
+        </label>
+        <label class="star-line" data-stars="4">
+            <input type="radio" name="rating" value="4">
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span>Tốt</span>
+        </label>
+        <label class="star-line" data-stars="3">
+            <input type="radio" name="rating" value="3">
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span>Bình thường</span>
+        </label>
+        <label class="star-line" data-stars="2">
+            <input type="radio" name="rating" value="2">
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span>Không tốt</span>
+        </label>
+        <label class="star-line" data-stars="1">
+            <input type="radio" name="rating" value="1">
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span class="star">&#9733;</span>
+            <span>Rất không tốt</span>
+        </label>
+    </div>
+
+    <div id="rating-value">Chưa đánh giá</div>
+
+    <style>
+        .star-rating {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .star-line {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+
+            .star-line input {
+                display: none; /* Ẩn nút radio */
+            }
+
+        .star {
+            font-size: 30px;
+            color: #d3d3d3; /* Màu xám nhạt cho sao chưa chọn */
+            margin-right: 5px;
+        }
+
+        .star-line span {
+            margin-left: 5px; /* Thêm khoảng cách giữa sao và chữ */
+        }
+
+        .star-line[data-stars="5"] .star:nth-child(-n+6) {
+            color: #ffcc00; /* Màu vàng cho 5 sao */
+        }
+
+        .star-line[data-stars="4"] .star:nth-child(-n+5) {
+            color: #ffcc00; /* Màu vàng cho 4 sao */
+        }
+
+        .star-line[data-stars="3"] .star:nth-child(-n+4) {
+            color: #ffcc00; /* Màu vàng cho 3 sao */
+        }
+
+        .star-line[data-stars="2"] .star:nth-child(-n+3) {
+            color: #ffcc00; /* Màu vàng cho 2 sao */
+        }
+
+        .star-line[data-stars="1"] .star:nth-child(-n+2) {
+            color: #ffcc00; /* Màu vàng cho 1 sao */
+        }
+        .star-line:hover .star {
+            box-shadow: 0 0 10px 2px #ffcc00; /* Sáng vàng quanh rìa sao khi hover */
+        }
+        #rating-value {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+    </style>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>}
+
+<script language="javascrip" type="text/javascript">
+    $(function () {
+        $("#chonDuongDanAnh").click(function () {
+            var ckfiner = new CKFinder();
+            ckfiner.selectActionFunction = function (fileUrl) {
+                $("#Hinhanh").val(fileUrl);
+            };
+            ckfiner.popup();
+        })
+    });
+
+
+    var ckeditor;
+    function createEditor(languageCode, id) {
+        var editor = CKEDITOR.replace(id, { language: languageCode });
+    }
+    $(function () { createEditor('vi', 'noidung') });</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="~/Scripts/postrating.js"></script>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

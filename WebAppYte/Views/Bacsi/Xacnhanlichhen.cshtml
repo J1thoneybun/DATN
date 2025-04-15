@@ -1,0 +1,97 @@
+﻿@model WebAppYte.DAO.LichKham
+@{
+    ViewBag.Title = "Xacnhanlichhen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userBS = Session["userBS"] as WebAppYte.Models.NguoiDung;
+
+}
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <h2> Xác nhận lịch hẹn</h2>
+        </div>
+
+    </div>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.madat)
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="ChuDe">Nội dung tư vấn </label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.mota, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.mota, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="BatDau"> Ngày khám </label>
+        <div class="col-md-10">
+
+            @Html.EditorFor(model => model.ngaykham, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.ngaykham, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2" for="BatDau"> Ca khám</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ca, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.ca, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2" for="BatDau"> Hình thức </label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.hinhthuc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.hinhthuc, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.trangthai, "Trang thai", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="form-control" id="trangthai" name="trangthai">
+                <option value="1">Xác nhận lịch</option>
+                <option value="2">Đã tư vấn xong</option>
+                <option value="3"> Từ chối lịch hẹn</option>
+            </select>
+
+            @Html.ValidationMessageFor(model => model.trangthai, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="BatDau">Khách hàng</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tenbn, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.tenbn, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Bác sĩ tư vấn", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="text" class="form-control" value="@Model.hoten" readonly />
+            @Html.HiddenFor(model => model.mand)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Cập nhật trạng thái" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    <a style="" href="@Url.Action("Kiemtralichhen", "BacSi", new { id = userBS.mand })">Back to list</a>
+</div>

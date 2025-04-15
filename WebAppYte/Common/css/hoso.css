@@ -1,0 +1,15 @@
+﻿
+.imgavt {
+    float: left;
+    margin-right: 30px
+}
+
+.divInfo {
+    float: left;
+    font-size: large;
+    line-height: 30px;
+}
+
+body {
+    background-color: #F6F6F6
+}

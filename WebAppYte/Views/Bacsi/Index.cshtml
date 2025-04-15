@@ -1,0 +1,37 @@
+﻿@model IEnumerable<WebAppYte.Models.NguoiDung>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    img {
+        margin-right: 20px;
+    }
+</style>
+<center><h2>DANH SÁCH BÁC SỸ HỖ TRỢ</h2></center>
+<hr />
+
+<div class="row">
+    <br />
+    @foreach (var item in Model)
+    {
+<div class="col-md-6">
+
+    <img class="imgavt" src="https://lh3.googleusercontent.com/Rj0xNHii1Olg2gDfe6uND3RBB3YWea44Lz3umPB0JkElMOyTrVHNXYLzRgtGlkfAA44" width="160" height="160" style="float:left" />
+    <br />
+    <b>Họ và tên: @item.hoten</b>
+    <h4>Trình độ: @item.hocham</h4>
+    <h4>Trình độ: @item.hocvi</h4>
+    <h4>Trình độ: @item.chucvu</h4>
+    <h4>Khoa: @item.Khoa.tenkhoa</h4>
+
+    <hr />
+</div>
+    }
+    <center>
+        <h3> <a href="@Url.Action("Index", "LichKham")">ĐẶT LỊCH KHÁM</a></h3>
+        <br />
+        <h3><a href="@Url.Action("Index", "Hoidap", new { id = @ViewBag.id })">GỬI CÂU HỎI CHO BÁC SĨ</a></h3>
+    </center>
+</div>

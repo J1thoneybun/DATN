@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Reports Index2";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+
+
+<div style="margin-top:200px">
+    <div id="main1" style="width: 100%; height: 500px; margin: 0 auto;"></div>
+    <div style="text-align: center; margin-top: 20px;">
+        <span id="tongCauHoi" style="font-size: 20px; font-weight: bold;"></span>
+    </div>
+
+    <!-- Thêm nút Tải xuống PDF vào trang -->
+    @*<div style="text-align: center; margin-top: 20px;">
+        <a href="@Url.Action("ExportPdf", "Reports", new { area = "Admin" })" class="btn btn-primary">Tải xuống PDF</a>
+    </div>*@
+</div>
+@section Scripts {
+    <script src="~/Scripts/echarts.min.js"></script>
+    <script>
+        // Lấy dữ liệu từ ViewBag
+        var tong = @Html.Raw(Json.Encode(ViewBag.Tong));
+        var daTraLoi = @Html.Raw(Json.Encode(ViewBag.DaTraLoi));
+        var chuaTraLoi = @Html.Raw(Json.Encode(ViewBag.ChuaTraLoi));
+        
+        //var tongSoCount = tongSo.reduce((a, b) => a + b, 0);
+
+        // Hiển thị Tổng Số vào thẻ HTML
+        document.getElementById('tongCauHoi').innerText = 'Tổng Số Câu Hỏi Nhận Được: ' + tong;
+        // Khởi tạo biểu đồ
+        var chartDom = document.getElementById('main1');
+        var myChart = echarts.init(chartDom);
+
+        // Cấu hình biểu đồ quạt
+        var option = {
+            title: {
+                text: 'Thống Kê Câu Hỏi',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['Tổng Số', 'Đã Trả Lời', 'Chưa Trả Lời']
+            },
+            series: [
+                {
+                    name: 'Tình trạng câu hỏi',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        /*{ value: tongSoCount, name: 'Tổng Số' },*/
+                        //{ value: tong.reduce((a, b) => a + b, 0), name: 'Tổng' },
+                        { value: daTraLoi, name: 'Đã Trả Lời' },
+                        { value: chuaTraLoi, name: 'Chưa Trả Lời' }
+                        
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // Hiển thị biểu đồ
+        myChart.setOption(option);
+    </script>
+
+
+}
+

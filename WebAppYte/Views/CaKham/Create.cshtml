@@ -1,0 +1,106 @@
+﻿@model WebAppYte.Models.CaKham
+<script src="~/Common/ckeditor/ckeditor.js"></script>
+<script src="~/Common/ckfinder/ckfinder.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script> <!-- Đổi từ slim.js -->
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userBS = Session["userBS"] as WebAppYte.Models.NguoiDung;
+}
+<div id="nivoslider" class="slides nivoSlider">
+    <div class="nivo-directionNav">
+        <a class="nivo-prevNav">Prev</a>
+        <a class="nivo-nextNav">Next</a>
+    </div>
+    <div class="nivo-slice" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; top:165px; left:170px;">
+            <h2>Thêm ca</h2>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.mand, "Bác sĩ", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.mand, ViewBag.mand as SelectList ?? new SelectList(Enumerable.Empty<SelectListItem>()), "-- Chọn bác sĩ --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.mand, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ngaykham, "Ngày khám", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input class="form-control text-box single-line"
+                   id="ngaykham" name="ngaykham" type="date"
+                   data-val="true" data-val-date="The field Bắt đầu must be a date."
+                   data-val-required="Vui lòng chọn ngày khám" required="required"
+                   min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span class="field-validation-valid text-danger" data-valmsg-for="ngaykham"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.hinhthuc, "Hình thức", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="form-control" id="hinhthuc" name="hinhthuc">
+                <option>Khám trong giờ</option>
+                <option>Khám ngoài giờ</option>
+                <option>Khám online</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.hinhthuc, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ca, "Ca khám", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select class="form-control" name="ca" required="required">
+                <option value="7:00-9:00">7:00-9:00</option>
+                <option value="9:30-11:30">9:30-11:30</option>
+                <option value="13:30-15:30">13:30-15:30</option>
+                <option value="16:00-18:00">16:00-18:00</option>
+                <option value="20:00-22:00">20:00-22:00</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.ca, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#chonDuongDanAnh").click(function () {
+            var ckfinder = new CKFinder();
+            ckfinder.selectActionFunction = function (fileUrl) {
+                $("#Hinhanh").val(fileUrl);
+            };
+            ckfinder.popup();
+        });
+
+        function createEditor(languageCode, id) {
+            CKEDITOR.replace(id, { language: languageCode });
+        }
+        createEditor('vi', 'Noidung');
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<div>
+    <a style="" href="@Url.Action("Index", "CaKham", new { id = userBS.mand })"> Back to list</a>
+</div>

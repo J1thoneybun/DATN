@@ -1,0 +1,561 @@
+﻿﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fullcalendarcss")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Common/css/style.css" rel="stylesheet" />
+    <link href="~/Common/css/StyleMenu.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/Common/Icon/css/all.css" rel="stylesheet" />
+
+</head>
+
+<body style="color:black">
+    @using WebAppYte.Models
+    @{ var u = Session["user"] as WebAppYte.Models.BenhNhan;
+        var userBS = Session["userBS"] as WebAppYte.Models.NguoiDung;
+    }
+    @if (u == null && userBS == null)
+    {
+
+        <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #AAAAAA;">
+            <div id="header" class="bg_brand cl_white pt_10 pb_10 mb_center">
+                <div class="container">
+                    <div class="row d-flex align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
+
+                        <!-- Cột 1: Logo -->
+                        <div class="col-md-4 d-flex justify-content-center">
+                            <a>
+                                <img width="253" height="155" src="~/images/images/logo.jpg"
+                                     class="image wp-image-12663  attachment-full size-full" alt="Phòng khám Linh Đàm" loading="lazy" style="max-width: 25%; height: auto;">
+                            </a>
+                        </div>
+
+                        <!-- Cột 2: Hotline -->
+                        <div class="col-md-4 d-flex flex-column align-items-center text-white">
+                            <div><i class="fas fa-phone-alt"></i> <strong>HOTLINE</strong></div>
+                            <div>0866 816 115</div>
+                        </div>
+
+                        <!-- Cột 3: Đặt lịch -->
+                        <div class="col-md-4 d-flex flex-column align-items-center text-white">
+                            <div><i class="fas fa-calendar-alt"></i> <strong>ĐẶT LỊCH KHÁM</strong></div>
+                            <div><strong>ĐỂ NHẬN MÃ SỐ KHÁM ƯU TIÊN</strong></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container" color="blue">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink(" TRANG CHỦ ", "Index", "Home", null, new { @class = "MauchuMenu" })</li>
+                        <li>@Html.ActionLink(" GIỚI THIỆU ", "Gioithieu", "Home", null, new { @class = "MauchuMenu" })</li>
+                        <li>@Html.ActionLink(" CHUYÊN GIA - BÁC SĨ", "ChuyenGiaBacSi", "ChuyenGiaBacSi", null, new { @class = "MauchuMenu" })</li>
+                        <li>@Html.ActionLink(" TIN TỨC", "Index", "TinTuc", null, new { @class = "MauchuMenu" })</li>
+                        <li>@Html.ActionLink(" HỎI ĐÁP ONLINE", "listAll", "Hoidap", null, new { @class = "MauchuMenu" })</li>
+                        <li>@Html.ActionLink("ĐĂNG KÝ", "Dangky", "Home", null, new { @class = "MauchuMenu" }) </li>
+                        <li>@Html.ActionLink("ĐĂNG NHẬP", "Dangnhap", "Home", null, new { @class = "MauchuMenu" })</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+        </div>
+        <hr />
+
+        <footer id="footer" class="cl_white bg_brand pt_30 mb_center">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-1  col-sm-3 col-xs-12">
+                        <img width="253" height="155" src="~/images/images/logo.jpg" class="image wp-image-12663  attachment-full size-full" alt="Phòng khám Linh Đàm" loading="lazy" style="max-width: 100%; height: auto;">
+                    </div>
+                    <div class="footer-2  col-sm-6  col-xs-12">
+                        <h3 class="widget-title sz_16 mt_0 font_hel mb_0"><span>HỆ THỐNG BỆNH VIỆN</span></h3><div class="textwidget custom-html-widget">
+                            <ul>
+                                <li class="row">
+                                    <div class="col-sm-7 col-xs-12">
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        Ô 26 - BT1X2, Khu đô thị Bắc Linh Đàm, Hoàng Mai, Hà Nội
+                                    </div>
+                                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fphongkhamlinhdam26bt1x2&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                                    <div class="col-sm-5 col-xs-12">
+                                        <i class="fa fa-phone" aria-hidden="true"></i>
+                                        <a href="tel:0866 816 115"><span class="cl_white">0866 816 115</span></a><br>
+                                        <span class="small">làm việc từ 7h30 - 19h30</span>
+                                        <br>
+                                        <div>
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                            <a href="mailto:phongkhamlinhdam@gmail.com"><span class="cl_white"> Mail cho chúng tôi</span></a><br>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-4 col-sm-3  col-xs-12">
+                        <h3 class="widget-title  sz_16 mt_0 font_hel mb_0"><span>ĐƯỜNG DẪN NHANH</span></h3><div class="menu-footer_duong-dan-nhanh-container">
+                            <ul id="menu-footer_duong-dan-nhanh" class="menu">
+                                <li id="menu-item-14754" class="menu-item menu-item-type-taxonomy menu-item-object-catkhoa menu-item-14754"><a href="@Url.Action("Index", "TinTuc")">Tin tức</a></li>
+                                <li id="menu-item-14756" class="menu-item menu-item-type-taxonomy menu-item-object-catchuyengia menu-item-14756"><a href="@Url.Action("ChuyenGiaBacSi", "ChuyenGiaBacSi")">Chuyên gia – bác sĩ</a></li>
+                                <li id="menu-item-15591" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15591"><a href="@Url.Action("Index", "Hoidap")">Hỏi đáp</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer> }
+    else
+    {
+        if (u != null && userBS == null)
+        {
+            <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #AAAAAA;">
+                <div id="header" class="bg_brand cl_white pt_10 pb_10 mb_center">
+                    <div class="container">
+                        <div class="row d-flex align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
+
+                            <!-- Cột 1: Logo -->
+                            <div class="col-md-4 d-flex justify-content-center">
+                                <a>
+                                    <img width="253" height="155" src="~/images/images/logo.jpg"
+                                         class="image wp-image-12663  attachment-full size-full" alt="Phòng khám Linh Đàm" loading="lazy" style="max-width: 25%; height: auto;">
+                                </a>
+                            </div>
+
+                            <!-- Cột 2: Hotline -->
+                            <div class="col-md-4 d-flex flex-column align-items-center text-white">
+                                <div><i class="fas fa-phone-alt"></i> <strong>HOTLINE</strong></div>
+                                <div>0866 816 115</div>
+                            </div>
+
+                            <!-- Cột 3: Đặt lịch -->
+                            <div class="col-md-4 d-flex flex-column align-items-center text-white">
+                                <div><i class="fas fa-calendar-alt"></i> <strong>ĐẶT LỊCH KHÁM</strong></div>
+                                <div><strong>ĐỂ NHẬN MÃ SỐ KHÁM ƯU TIÊN</strong></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container" color="blue">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="navbar-collapse collapse">
+
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink(" TRANG CHỦ ", "Index", "Home", null, new { @class = "MauchuMenu" })</li>
+                            <li>@Html.ActionLink(" GIỚI THIỆU ", "Gioithieu", "Home", null, new { @class = "MauchuMenu" })</li>
+                            <li>@Html.ActionLink(" CHUYÊN GIA - BÁC SĨ", "ChuyenGiaBacSi", "ChuyenGiaBacSi", null, new { @class = "MauchuMenu" })</li>
+                            <li>@Html.ActionLink(" TIN TỨC", "Index", "TinTuc", null, new { @class = "MauchuMenu" })</li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">HỎI ĐÁP<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("Index", "Hoidap", new { id = u.mabn  })">CÂU HỎI ĐÃ HOÀN THÀNH CỦA BẠN</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Cauhoichoxuly", "Hoidap", new { id = u.mabn  })">CÂU HỎI CHỜ GIẢI ĐÁP</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("ListAll", "Hoidap")">TẤT CẢ CÂU HỎI</a></li>
+
+                                </ul>
+                            <li>
+
+                            <li><a href="@Url.Action("Index", "LichKham", new { id = u.mabn  })">QUẢN LÝ LỊCH KHÁM</a></li>
+                        </ul>
+
+
+                        @{ if (u != null)
+                            {
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a style="color:blue" href="@Url.Action("Details", "BenhNhan", new { id = u.mabn })"> HỒ SƠ CÁ NHÂN </a>
+                                    </li>
+                                    <li> @Html.ActionLink("ĐĂNG XUẤT", "DangXuat", "Home", null, new { @class = "MauchuMenu" })</li>
+                                </ul> }
+                            else
+                            {
+                                <ul class="nav navbar-nav">
+                                    <li> @Html.ActionLink("ĐĂNG KÝ", "Dangky", "Home", null, new { @class = "MauchuMenu" }) </li>
+                                    <li>
+                                        @Html.ActionLink("ĐĂNG NHẬP", "Dangnhap", "Home", null, new { @class = "MauchuMenu" })
+                                    </li>
+                                </ul> }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="container body-content">
+                @RenderBody()
+            </div>
+            <hr />
+            <footer id="footer" class="cl_white bg_brand pt_30 mb_center">
+                <div class="container">
+                    <div class="row">
+                        <div class="footer-1  col-sm-3 col-xs-12">
+                            <img width="253" height="155" src="~/images/images/logo.jpg" class="image wp-image-12663  attachment-full size-full" alt="Phòng khám Linh Đàm" loading="lazy" style="max-width: 50%; height: auto;">
+                        </div>
+                        <div class="footer-2  col-sm-6  col-xs-12">
+                            <h3 class="widget-title sz_16 mt_0 font_hel mb_0"><span>HỆ THỐNG BỆNH VIỆN</span></h3><div class="textwidget custom-html-widget">
+                                <ul>
+                                    <li class="row">
+                                        <div class="col-sm-7 col-xs-12">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            Ô 26 - BT1X2, Khu đô thị Bắc Linh Đàm, Hoàng Mai, Hà Nội
+                                        </div>
+                                        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fphongkhamlinhdam26bt1x2&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                                        <div class="col-sm-5 col-xs-12">
+                                            <i class="fa fa-phone" aria-hidden="true"></i>
+                                            <a href="tel:0866 816 115"><span class="cl_white">0866 816 115</span></a><br>
+                                            <span class="small">làm việc từ 7h30 - 19h30</span>
+                                            <br>
+                                            <div>
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                <a href="mailto:phongkhamlinhdam@gmail.com"><span class="cl_white"> Mail cho chúng tôi</span></a><br>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer-4 col-sm-3  col-xs-12">
+                            <h3 class="widget-title  sz_16 mt_0 font_hel mb_0"><span>ĐƯỜNG DẪN NHANH</span></h3><div class="menu-footer_duong-dan-nhanh-container">
+                                <ul id="menu-footer_duong-dan-nhanh" class="menu">
+                                    <li id="menu-item-14754" class="menu-item menu-item-type-taxonomy menu-item-object-catkhoa menu-item-14754"><a href="@Url.Action("Index", "TinTuc")">Tin tức</a></li>
+                                    <li id="menu-item-14756" class="menu-item menu-item-type-taxonomy menu-item-object-catchuyengia menu-item-14756"><a href="@Url.Action("ChuyenGiaBacSi", "ChuyenGiaBacSi")">Chuyên gia – bác sĩ</a></li>
+                                    <li id="menu-item-15591" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15591"><a href="@Url.Action("Index", "Hoidap")">Hỏi đáp</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer> }
+        else
+        {
+            <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #AAAAAA;">
+                <div id="header" class="bg_brand cl_white pt_10 pb_10 mb_center">
+                    <div class="container">
+                        <div class="row d-flex align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
+
+                            <!-- Cột 1: Logo -->
+                            <div class="col-md-4 d-flex justify-content-center">
+                                <a>
+                                    <img width="253" height="155" src="~/images/images/logo.jpg"
+                                         class="image wp-image-12663  attachment-full size-full" alt="Phòng khám Linh Đàm" loading="lazy" style="max-width: 25%; height: auto;">
+                                </a>
+                            </div>
+
+                            <!-- Cột 2: Hotline -->
+                            <div class="col-md-4 d-flex flex-column align-items-center text-white">
+                                <div><i class="fas fa-phone-alt"></i> <strong>HOTLINE</strong></div>
+                                <div>0866 816 115</div>
+                            </div>
+
+                            <!-- Cột 3: Đặt lịch -->
+                            <div class="col-md-4 d-flex flex-column align-items-center text-white">
+                                <div><i class="fas fa-calendar-alt"></i> <strong>ĐẶT LỊCH KHÁM</strong></div>
+                                <div><strong>ĐỂ NHẬN MÃ SỐ KHÁM ƯU TIÊN</strong></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container" color="blue">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink(" TRANG CHỦ ", "Index", "Home", null, new { @class = "MauchuMenu" })</li>
+                            <li>
+                                @Html.ActionLink("TRẢ LỜI CÂU HỎI", "Quanlyhoidap", "Bacsi")
+                            </li>
+                            <li>
+                                <a style="" href="@Url.Action("Index", "CaKham", new { id = userBS.mand })"> QUẢN LÝ CA KHÁM</a>
+
+                            </li>
+                            <li>
+                                <a style="" href="@Url.Action("Kiemtralichhen", "BacSi", new { id = userBS.mand })"> QUẢN LÝ LỊCH KHÁM</a>
+
+                            </li>
+                            <li>
+                                <a style="" href="@Url.Action("IndexBS", "TinTuc", new { id = userBS.mand })"> TIN TỨC</a>
+
+                            </li>
+
+                        </ul>
+                        @{ if (userBS != null)
+                            {
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a style="" href="@Url.Action("Details", "BacSi", new { id = userBS.mand })"> HỒ SƠ CÁ NHÂN</a>
+                                    </li>
+                                    <li> @Html.ActionLink("ĐĂNG XUẤT", "DangXuatBS", "Home", null, new { @class = "MauchuMenu" })</li>
+                                </ul> }
+                            else
+                            {
+                                <ul class="nav navbar-nav" style="margin-left:200px">
+                                    <li> @Html.ActionLink("ĐĂNG KÝ", "Dangky", "Home", null, new { @class = "MauchuMenu" }) </li>
+                                    <li> @Html.ActionLink("ĐĂNG NHẬP", "Dangnhap", "Home", null, new { @class = "MauchuMenu" })</li>
+                                </ul>
+                            }
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                @RenderBody()
+                <hr />
+            </div>
+            <footer id="footer" class="cl_white bg_brand pt_30 mb_center">
+                <div class="container">
+                    <div class="row">
+                        <div class="footer-1  col-sm-3 col-xs-12">
+                            <img width="253" height="155" src="~/images/images/logo.jpg" class="image wp-image-12663  attachment-full size-full" alt="Phòng khám Linh Đàm" loading="lazy" style="max-width: 100%; height: auto;">
+                        </div>
+                        <div class="footer-2  col-sm-6  col-xs-12">
+                            <h3 class="widget-title sz_16 mt_0 font_hel mb_0"><span>HỆ THỐNG BỆNH VIỆN</span></h3><div class="textwidget custom-html-widget">
+                                <ul>
+                                    <li class="row">
+                                        <div class="col-sm-7 col-xs-12">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            Ô 26 - BT1X2, Khu đô thị Bắc Linh Đàm, Hoàng Mai, Hà Nội
+                                        </div>
+                                        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fphongkhamlinhdam26bt1x2&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                                        <div class="col-sm-5 col-xs-12">
+                                            <i class="fa fa-phone" aria-hidden="true"></i>
+                                            <a href="tel:0866 816 115"><span class="cl_white">0866 816 115</span></a><br>
+                                            <span class="small">làm việc từ 7h30 - 19h30</span>
+                                            <br>
+                                            <div>
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                <a href="mailto:phongkhamlinhdam@gmail.com"><span class="cl_white"> Mail cho chúng tôi</span></a><br>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer-4 col-sm-3  col-xs-12">
+                            <h3 class="widget-title  sz_16 mt_0 font_hel mb_0"><span>ĐƯỜNG DẪN NHANH</span></h3><div class="menu-footer_duong-dan-nhanh-container">
+                                <ul id="menu-footer_duong-dan-nhanh" class="menu">
+                                    <li id="menu-item-14754" class="menu-item menu-item-type-taxonomy menu-item-object-catkhoa menu-item-14754"><a href="@Url.Action("Index", "TinTuc")">Tin tức</a></li>
+                                    <li id="menu-item-14756" class="menu-item menu-item-type-taxonomy menu-item-object-catchuyengia menu-item-14756"><a href="@Url.Action("ChuyenGiaBacSi", "ChuyenGiaBacSi")">Chuyên gia – bác sĩ</a></li>
+                                    <li id="menu-item-15591" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15591"><a href="@Url.Action("Index", "Hoidap")">Hỏi đáp</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>}
+
+    }
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/fullcalendarjs")
+    <!-- Scroll To Top Button-->
+    <button id="scrollToTopBtn" class="btn-scroll-top" title="Lên đầu trang">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var scrollBtn = document.getElementById("scrollToTopBtn");
+
+            // Hiện nút khi cuộn xuống >200px
+            window.addEventListener("scroll", function () {
+                if (window.pageYOffset > 200) {
+                    scrollBtn.classList.add("show");
+                } else {
+                    scrollBtn.classList.remove("show");
+                }
+            });
+
+            // Khi click, cuộn mượt về top
+            scrollBtn.addEventListener("click", function () {
+                window.scrollTo({ top: 0, behavior: "smooth" }); // smooth scroll :contentReference[oaicite:0]{index=0}
+            });
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<style>
+    .navbar-nav .dropdown {
+        position: relative;
+    }
+
+    .navbar-nav {
+        display: flex;
+        justify-content: space-between; /* Điều chỉnh khoảng cách */
+        align-items: center; /* Canh chỉnh theo chiều dọc */
+        list-style: none; /* Bỏ dấu đầu dòng */
+        margin: 0; /* Loại bỏ khoảng cách thừa */
+        padding: 0; /* Loại bỏ khoảng cách thừa */
+    }
+
+        .navbar-nav .dropdown .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+            background-color: #f8f9fa;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        /* Khi hover vào mục "TRANG CHỦ", hiển thị menu con */
+        .navbar-nav .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+    /* Style cho các mục trong menu dropdown */
+    .dropdown-menu li a {
+        padding: 8px 16px;
+        color: #333;
+        text-decoration: none;
+    }
+
+        .dropdown-menu li a:hover {
+            background-color: #f1f1f1;
+        }
+    /* Nút scroll to top */
+    .btn-scroll-top {
+        display: none; /* Ẩn mặc định */
+        position: fixed; /* Cố định trong viewport */
+        bottom: 30px; /* Cách đáy 30px */
+        right: 30px; /* Cách phải 30px */
+        width: 50px;
+        height: 50px; /* Kích thước */
+        background-color: rgba(0,0,0,0.5);
+        color: #fff;
+        border: none;
+        border-radius: 50%; /* Tròn */
+        cursor: pointer;
+        transition: opacity 0.4s, visibility 0.4s; /* Fade in/out :contentReference[oaicite:1]{index=1} */
+        opacity: 0;
+        visibility: hidden;
+    }
+
+        /* Khi cuộn đủ để hiện */
+        .btn-scroll-top.show {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hover effect */
+        .btn-scroll-top:hover {
+            background-color: rgba(0,0,0,0.7);
+        }
+    #header {
+        background-color: #102e9e; /* màu xanh đậm của bạn */
+        color: white;
+    }
+
+        #header .fas {
+            margin-right: 5px;
+        }
+        .top-header {
+    background-color: #1f2ba4;
+    padding: 20px 0;
+    color: white;
+}
+
+.header-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* 3 cột bằng nhau */
+    align-items: center;
+    gap: 10px;
+}
+
+.header-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.logo img {
+    height: 70px;
+    object-fit: contain;
+}
+
+.info-block i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.text-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-wrap .title {
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.text-wrap .main-info {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Responsive */
+@@media (max-width: 768px) {
+    .header-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .header-col {
+        flex-direction: column;
+    }
+
+    .info-block {
+        justify-content: center;
+    }
+}
+
+
+</style>

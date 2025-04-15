@@ -1,0 +1,73 @@
+﻿@model WebAppYte.Models.BaiViet
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Tintuc</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+          Tiêu đề
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tieude)
+        </dd>
+
+        <dt>
+            Nội dung
+        </dt>
+
+        <dd>
+            @Html.Raw(@Model.noidung)
+        </dd>
+
+        <dt>
+           Hình ảnh
+        </dt>
+
+        <dd>
+            <a class="thumb_cgia">
+                <img class="img-responsive " loading="lazy" src="~/Common/images/@Model.hinhanh" style="width:150px;height:150px;">
+            </a>
+        </dd>
+
+        <dt>
+           Mô tả
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mota)
+        </dd>
+
+        <dt>
+           Ngày đăng
+        </dt>
+
+        <dd>
+           @Model.ngaydang.Value.ToString("dd/MM/yyyy")
+        </dd>
+        <dt>
+            Thể loại
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Loai.tenloai)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

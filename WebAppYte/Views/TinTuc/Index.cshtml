@@ -1,0 +1,82 @@
+﻿@using WebAppYte.Models;
+@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<BaiViet>
+@{ ViewBag.Title = "TinTuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style type="text/css">
+    th {
+        text-align: center
+    }
+
+    .tenBV {
+        color: orangered;
+        font-size: x-large
+    }
+</style>
+
+
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">TIN TỨC</span></p></nav>
+        </div>
+
+    </div>
+</div>
+
+<div class="text-center">
+    <h1 class="div_head text-center cl_head text-uppercase font_hel sz_24 mb_15  pb_15">
+        Tin tức
+    </h1>
+</div>
+<br />
+@foreach (var item in Model)
+{
+    <div class="row div_flex">
+        <div class="col-sm-6 col-xs-12 item noright">
+            <a class="thumb_post" href="@Url.Action("Details", "TinTuc", new { id = item.mabv})">
+                <img class="img-responsive " loading="lazy" src="~/images/images/@item.hinhanh" style="width:574px; height:300px;">
+            </a>
+        </div>
+        <div class="col-sm-6 col-xs-12 item noleft">
+            <div class=" pl_15 pr_15">
+                <a class="title_post" title="@item.tieude" href="@Url.Action("Details", "TinTuc", new { id = item.mabv})">
+                    <h2 class="mt_10 mb_15 sz_18 cl_33" style="font-weight: bold;text-transform:uppercase;">@item.tieude</h2>
+                </a>
+                <div class="mb_10 small">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    @item.ngaydang
+                </div>
+          
+                <p class="text-justify">
+                    @item.mota
+                </p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+<div class="pagination-bar">
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="text"> Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) của @Model.PageCount</div>
+        </div>
+
+        <div class="col-md-8 col-sm-8 col-xs-12">
+            <div class="pagination">
+                <ul class="page-list">
+                    <li>@Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize =5 }))</li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

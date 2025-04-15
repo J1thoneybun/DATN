@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Reports Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<!-- Thêm link Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<div style="margin-top:200px">
+    <div id="main" style="width: 100%; height: 500px; margin: 0 auto;"></div>
+    <div style="text-align: center; margin-top: 20px;">
+        <span id="tongSoCount" style="font-size: 20px; font-weight: bold;"></span>
+    </div>
+
+    <!-- Thêm nút Tải xuống PDF vào trang -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="@Url.Action("ExportPdf", "Reports", new { area = "Admin" })" class="btn btn-primary">Tải xuống PDF</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/echarts.min.js"></script>
+    <script>
+        // Lấy dữ liệu từ ViewBag
+        var tongSo = @Html.Raw(Json.Encode(ViewBag.TongSo));       // Tổng số lịch
+        var dangXuLi = @Html.Raw(Json.Encode(ViewBag.DangXuLi));   // Đang xử lý
+        var daXacNhan = @Html.Raw(Json.Encode(ViewBag.DaXacNhan)); // Đã xác nhận
+        var daTuVan = @Html.Raw(Json.Encode(ViewBag.DaTuVan));     // Đã tư vấn
+        var daHuy = @Html.Raw(Json.Encode(ViewBag.DaHuy));         // Đã hủy
+        var hoanThanh = @Html.Raw(Json.Encode(ViewBag.HoanThanh)); // Hoàn thành
+        var tongSoCount = tongSo.reduce((a, b) => a + b, 0);
+
+        // Hiển thị Tổng Số vào thẻ HTML
+        document.getElementById('tongSoCount').innerText = 'Tổng Số Lịch Đặt: ' + tongSoCount;
+
+        // Khởi tạo biểu đồ
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+
+        // Cấu hình biểu đồ quạt
+        var option = {
+            title: {
+                text: 'Thống Kê Đặt Lịch',
+                left: 'center',
+                textStyle: {
+                    fontFamily: 'Roboto, sans-serif',  // Đảm bảo sử dụng font phù hợp
+                    fontWeight: 'bold',
+                    fontSize: 18
+                }
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['Tổng Số', 'Đang Xử Lý', 'Đã Xác Nhận', 'Đã Tư Vấn', 'Đã Hủy', 'Hoàn Thành'],
+                textStyle: {
+                    fontFamily: 'Roboto, sans-serif',  // Font chữ cho legend
+                    fontSize: 14
+                }
+            },
+            series: [
+                {
+                    name: 'Tình trạng đặt lịch',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: dangXuLi.reduce((a, b) => a + b, 0), name: 'Đang Xử Lý' },
+                        { value: daXacNhan.reduce((a, b) => a + b, 0), name: 'Đã Xác Nhận' },
+                        { value: daTuVan.reduce((a, b) => a + b, 0), name: 'Đã Tư Vấn' },
+                        { value: daHuy.reduce((a, b) => a + b, 0), name: 'Đã Hủy' },
+                        { value: hoanThanh.reduce((a, b) => a + b, 0), name: 'Hoàn Thành' }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // Hiển thị biểu đồ
+        myChart.setOption(option);
+    </script>
+}

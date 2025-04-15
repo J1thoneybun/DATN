@@ -1,0 +1,85 @@
+﻿@model WebAppYte.Models.HoiDap
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HoiDap</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BenhNhan.tenbn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BenhNhan.tenbn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NguoiDung.tendn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiDung.tendn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hoi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hoi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ngayhoi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngayhoi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ngaytl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngaytl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.trangthai)
+        </dt>
+
+        <dd>
+            @{ if (Model.trangthai == 0)
+                            {
+                <h5 style="color:red">Chưa trả lời</h5> }
+                            if (Model.trangthai == 1)
+                            {
+                <h5 style="color:red">Đã trả lời</h5> } }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

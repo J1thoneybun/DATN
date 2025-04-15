@@ -1,0 +1,84 @@
+﻿@model WebAppYte.Models.HoiDap
+
+@{ ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var u = Session["user"] as WebAppYte.Models.BenhNhan;}
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">HỎI ĐÁP</span></p></nav>
+        </div>
+
+    </div>
+</div>
+<div class="text-center">
+    <h1 class="div_head text-center cl_head text-uppercase font_hel sz_24 mb_15  pb_15">
+        Bạn thực sự muốn xóa?
+    </h1>
+</div>
+<div>
+    <h4>HoiDap</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BenhNhan.tenbn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BenhNhan.tenbn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NguoiDung.tendn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiDung.tendn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hoi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hoi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ngayhoi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngayhoi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.trangthai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.trangthai)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+@Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Delete" class="btn btn-default" /> |
+    <li><a href="@Url.Action("Index", "Hoidap", new { id = u.mabn  })">Back to list</a></li>
+</div>}
+</div>

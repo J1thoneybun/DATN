@@ -1,0 +1,138 @@
+﻿@model WebAppYte.Models.NguoiDung
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>QuanTri</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Họ tên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hoten)
+        </dd>
+
+        <dt>
+            Ngày sinh
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngaysinh)
+        </dd>
+
+        <dt>
+            Giới tính
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gioitinh)
+        </dd>
+
+        <dt>
+            SĐT
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sdt)
+        </dd>
+
+        <dt>
+            Email
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            Địa chỉ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diachi)
+        </dd>
+
+        <dt>
+            Chức vụ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.chucvu)
+        </dd>
+
+        <dt>
+            Học hàm
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hocham)
+        </dd>
+        <dt>
+            Học vị
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hocvi)
+        </dd>
+        <dt>
+            Giới thiệu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gioithieu)
+        </dd>
+        <dt>
+            Khoa
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Khoa.tenkhoa)
+        </dd>
+        <dt>
+            Chi nhánh
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChiNhanh.diachi)
+        </dd>
+        <dt>
+            Tên đăng nhập
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tendn)
+        </dd>
+        <dt>
+            Mật khẩu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mk)
+        </dd>
+        <dt>
+            Quyền
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quyen)
+        </dd>
+        <dt>
+            Ảnh
+        </dt>
+
+        <dd>
+            <img class="img-responsive " loading="lazy" src="~/images/images/@Model.anh" style="width:150px;height:150px;">
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.mand }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

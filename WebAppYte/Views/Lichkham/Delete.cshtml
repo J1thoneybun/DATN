@@ -1,0 +1,86 @@
+﻿
+@model WebAppYte.DAO.LichKham
+
+@{ ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<style type="text/css">
+    .imgavt {
+        margin-right: 15px;
+    }
+</style>
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">LỊCH HẸN</span></p></nav>
+        </div>
+
+    </div>
+</div>
+<center>
+
+
+    <h4 style="color:red;">BẠN CÓ CHẮC CHẮN MUỐN XOÁ KHÔNG?</h4>
+    <div>
+
+
+        <hr />
+        <dl class="dl-horizontal" style="font-size: 19px;">
+
+            <dt style="position:absolute;  height:auto; display:block !important;  left:500px;">
+                Bác sĩ:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.hoten)
+            </dd>
+            <br />
+            <dt style="position:absolute;  height:auto; display:block !important;  left:500px;">
+                Ngày khám:
+            </dt>
+
+            <dd>
+                @Model.ngaykham.ToString("dd/MM/yyyy")
+            </dd>
+            <br />
+            <dt style="position:absolute;  height:auto; display:block !important;  left:500px;">
+                Hình thức:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.hinhthuc)
+            </dd>
+            <br />
+            <dt style="position:absolute;  height:auto; display:block !important;  left:500px;">
+                Ca khám:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ca)
+            </dd>
+            <br />
+            <dt style="position:absolute;  height:auto; display:block !important;  left:500px;">
+                Lý do:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mota)
+            </dd>
+
+            <br />
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color" style="color:blue;">
+                <input type="submit" value="Delete" class="btn btn-default" style="color:white; background-color:blue;" /> |
+                @Html.ActionLink("Back to List","Index",new { id = Model.mabn })
+            </div>
+        }
+    </div>
+</center>

@@ -1,0 +1,619 @@
+﻿@model PagedList.IPagedList<WebAppYte.DAO.LichKham>
+@using PagedList.Mvc;
+
+@{ ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var u = Session["user"] as WebAppYte.Models.BenhNhan; }
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">ĐẶT LỊCH KHÁM</span></p></nav>
+        </div>
+
+    </div>
+</div>
+@if (u != null)
+{
+    <div>
+        <button type="button" class="btn btn-warning"
+                onclick="location.href='@Url.Action("Create", "LichKham")'">
+            Đặt mới
+        </button>
+        <button type="button" class="btn btn-default"
+                onclick="location.href='@Url.Action("Dangxuly", "LichKham", new { id = u.mabn })'">
+            Đang xác nhận
+        </button>
+        <button type="button" class="btn btn-default"
+                onclick="location.href='@Url.Action("Daxacnhan", "LichKham", new { id = u.mabn })'">
+            Đã xác nhận
+        </button>
+        <button type="button" class="btn btn-default"
+                onclick="location.href='@Url.Action("Datuvanxong", "LichKham", new { id = u.mabn })'">
+            Đã xong
+        </button>
+    </div>
+    <div class="form-horizontal" style=" height: 100%;display: flex;  justify-content: center;">
+        @using (Html.BeginForm("ActionPostData", "LichKham", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <h4 style="color:red;margin-left:140px;">@ViewBag.Fail</h4>
+            <div class="div_booking pb_15" style="width:500px; ">
+                <style>
+                    .gia-scheduler__overlay {
+                        z-index: 9999999 !important;
+                    }
+                </style>
+                <div class="box_dathen" style="min-height: 567px;">
+                    <div class="ta-booking">
+                        <div class="ta-frame__header">
+                            <div class="ta-frame__header-title">ĐĂNG KÝ KHÁM BỆNH</div>
+                        </div>
+                        <div class="ta-frame__content">
+                            <div class="el-form-item">
+                                <label for="vendor" class="el-form-item__label">Chọn địa điểm khám</label>
+                                <div class="el-form-item__content">
+                                    @foreach (var item in ViewBag.chinhanh)
+                                    {
+                                        if (item == ViewBag.cn)
+                                        {
+                                            <label role="radio" tabindex="0" class="el-radio" style="width:150px;">
+                                                <span class="el-radio__input">
+                                                    <span class="el-radio__inner"></span>
+                                                    <input type="radio" aria-hidden="true" tabindex="-1" autocomplete="off" class="el-radio__original" value="@item" id="@item" name="chinhanh" checked="checked" @*onchange="this.form.submit()"*@>
+                                                </span>
+                                                <span class="el-radio__label"> @item<!----></span>
+                                            </label>}
+                                        else
+                                        {
+                                            <label role="radio" tabindex="0" class="el-radio" style="width:150px;">
+                                                <span class="el-radio__input">
+                                                    <span class="el-radio__inner"></span>
+                                                    <input type="radio" aria-hidden="true" tabindex="-1" autocomplete="off" class="el-radio__original" value="@item" id="@item" name="chinhanh" @*onchange="this.form.submit()"*@>
+                                                </span>
+                                                <span class="el-radio__label"> @item<!----></span>
+                                            </label>}
+                                    }
+                                </div>
+                            </div>
+                            <label for="vendor" class="el-form-item__label">Chọn loại dịch vụ khám</label>
+                            <div class="el-form-item__content">
+                                @foreach (var item in ViewBag.hinhthuc)
+                                {
+                                    if (item.Text == ViewBag.ht)
+                                    {
+                                        <label role="radio" tabindex="0" class="el-radio" style="width:150px;">
+                                            <span class="el-radio__input">
+                                                <span class="el-radio__inner"></span>
+                                                <input type="radio" aria-hidden="true" tabindex="-1" autocomplete="off" class="el-radio__original" value="@item.Value" id="@item.Value" name="hinhthuc" checked="checked" @*onchange="this.form.submit()"*@>
+                                            </span>
+                                            <span class="el-radio__label"> @item.Text<!----></span>
+                                        </label>}
+                                    else
+                                    {
+                                        <label role="radio" tabindex="0" class="el-radio" style="width:150px;">
+                                            <span class="el-radio__input">
+                                                <span class="el-radio__inner"></span>
+                                                <input type="radio" aria-hidden="true" tabindex="-1" autocomplete="off" class="el-radio__original" value="@item.Value" id="@item.Value" name="hinhthuc" @*onchange="this.form.submit()"*@>
+                                            </span>
+                                            <span class="el-radio__label"> @item.Text</span>
+                                        </label>}
+                                }
+                            </div>
+                        </div>
+                        <label for="vendor" class="el-form-item__label" style="margin-left:10px; color:white;"> Vui lòng chọn địa điểm khám &amp; dịch vụ khám trước</label>
+                        <div class="el-form-item">
+                            <div class="el-form-item__content">
+                                <div data-v-b270d436="" class="gia-select" style="margin-left:15px">
+                                    <i data-v-b270d436="" class="gia-select__caret el-select__caret el-input__icon el-icon-arrow-down"></i>
+                                    <select name="khoa" style="width:470px;" @*onchange="this.form.submit()"*@>
+                                        <option value="" selected disabled style="color:gray;">Chọn chuyên khoa</option>
+                                        @foreach (var item in ViewBag.khoa)
+                                        {
+                                            if (item == ViewBag.k)
+                                            {
+                                                <option value="@item" selected>@item</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item"> @item </option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <br />
+                                <div data-v-b270d436="" class="gia-select" style="margin-left:15px">
+                                    <i data-v-b270d436="" class="gia-select__caret el-select__caret el-input__icon el-icon-arrow-down"></i>
+                                    <select name="bacsi" style="width:470px;" @*onchange="this.form.submit()"*@>
+                                        <option value="" selected disabled style="color:gray;">Chọn bác sĩ</option>
+                                        @foreach (var item in ViewBag.bacsi)
+                                        {
+
+                                            if (item == ViewBag.bs)
+                                            {
+                                                <option value="@item" selected>@item</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="el-form-item">
+                            <div class="el-form-item__content">
+                                <div data-v-80145740="" class="gia-scheduler el-input el-input--prefix" style="margin-left:15px">
+                                    <div data-v-80145740="" class="gia-scheduler__input el-input__inner">
+                                        <span data-v-80145740="" class="el-input__prefix">
+                                            <i data-v-80145740="" class="el-input__icon bx bx-calendar"></i>
+                                            <select name="ngaykham" style="width:470px;" @*onchange="this.form.submit()"*@>
+                                                <option value="" selected disabled style="color:gray;">Chọn ngày khám </option>
+                                                @foreach (var item in ViewBag.ngaykham)
+                                                {
+                                                    if (item == ViewBag.nk)
+                                                    {
+                                                        <option value="@item" selected>@item</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item">@item</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="el-form-item">
+                            <div class="el-form-item__content">
+                                <div data-v-80145740="" class="gia-scheduler el-input el-input--prefix" style="margin-left:15px">
+                                    <div data-v-80145740="" class="gia-scheduler__input el-input__inner">
+                                        <span data-v-80145740="" class="el-input__prefix">
+                                            <i data-v-80145740="" class="el-input__icon bx bx-calendar"></i>
+                                            <select name="cakham" style="width:470px;" @*onchange="this.form.submit()"*@>
+                                                <option value="" selected disabled style="color:gray;">Chọn ca khám </option>
+                                                @foreach (var item in ViewBag.cakham)
+                                                {
+                                                    if (item == ViewBag.ca)
+                                                    {
+                                                        <option value="@item" selected>@item</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item">@item</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="el-form-item is-required">
+                        <label for="note" class="el-form-item__label" style="margin-left:15px; color:white;">Vấn đề sức khỏe cần khám</label>
+                        <div class="el-form-item__content">
+                            <div class="el-textarea" style="width: 100%; color:black; max-width: 500px;">
+                                <textarea name="mota" id="mota" autocomplete="off" rows="4" placeholder="Nhập tình trạng sức khoẻ của bạn, câu hỏi dành cho bác sĩ và các vấn đề sức khỏe cần khám" class="el-textarea__inner" style="min-height: 33px; width:470px; margin-left:15px" @*onchange="this.form.submit()"*@></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <button name="datlich" type="button" class="el-button expanded el-button--primary" style="background: #1f28af;width: 470px; height:100%;color:white; margin-left:15px;" @*onchange="this.form.submit()"*@>
+                        <a><span>ĐẶT LỊCH KHÁM →</span></a>
+                    </button>
+                </div>
+                <div class="el-loading-mask" style="display: none;">
+                    <div class="el-loading-spinner"><svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg><!----></div>
+                </div>
+            </div>}
+    </div>
+
+    //chon khoa xong se lay cac bac si ra
+    <script>
+        $('select[name=khoa]').change(function () {
+            var chinhanh = $('input[name=chinhanh]:checked').val(); // Lấy giá trị radio chinhanh
+            var khoa = $('select[name=khoa]').val(); // Lấy giá trị select khoa
+
+            $.ajax({
+                url: "/Admin/NguoiDungs/getNguoiDung",
+                type: "GET",
+                data: { tenKhoa: khoa, chinhanh: chinhanh }, // Truyền cả tenKhoa và chinhanh
+                success: function (results) {
+                    //console.log(results);
+                    $('select[name=bacsi]').empty();
+                    $('select[name=bacsi]').append('<option> Chọn bác sĩ </option>');
+
+                    $.each(results, function (index, result) {
+                        $('select[name=bacsi]').append('<option value="' + result.mand + '">' + result.hoten + '</option>');
+                    });
+                    $('select[name=ngaykham]').empty().append('<option> Chọn ngày khám </option>');
+                    $('select[name=cakham]').empty().append('<option> Chọn ca khám </option>');
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error occurred: " + error);
+                }
+            });
+        });
+
+    </script>
+    //chon bac si xong, lay ngay kham ra
+    <script>
+        $(document).ready(function () {
+            $('select[name=bacsi]').change(function () {
+                var mand = $(this).val(); // Lấy mã bác sĩ từ dropdown
+
+                if (mand) { // Kiểm tra nếu mã bác sĩ tồn tại
+                    $.ajax({
+                        url: "/Admin/NguoiDungs/getNgayKham", // API lấy ngày khám
+                        type: "GET",
+                        data: { mand: mand }, // Gửi mã bác sĩ đến server
+                        success: function (results) {
+                            $('select[name=ngaykham]').empty(); // Làm trống dropdown ngày khám
+                            $('select[name=ngaykham]').append('<option> Chọn ngày khám </option>');
+                            $('select[name=cakham]').empty(); // Làm trống dropdown ngày khám
+                            $('select[name=cakham]').append('<option> Chọn ca  khám </option>');
+                            if (results.length > 0) {
+                                // Thêm các ngày khám vào dropdown
+                                $.each(results, function (index, ngaykham) {
+                                    $('select[name=ngaykham]').append('<option value="' + ngaykham + '">' + ngaykham + '</option>');
+                                });
+                            } else {
+                                alert("Không có ngày khám khả dụng cho bác sĩ này.");
+                            }
+                        },
+                        error: function () {
+                            alert("Có lỗi xảy ra khi tải ngày khám. Vui lòng thử lại.");
+                        }
+                    });
+                } else {
+                    $('select[name=ngaykham]').empty(); // Làm trống dropdown nếu không chọn bác sĩ
+                    $('select[name=ngaykham]').append('<option> Chọn ngày khám </option>');
+                }
+            });
+        });
+    </script>
+    //chon ngay kham xong lay cakham ra
+    <script>
+        $(document).ready(function () {
+            // Khi chọn ngày khám
+            $('select[name=ngaykham]').change(function () {
+                var mand = $('select[name=bacsi]').val(); // Lấy mã bác sĩ
+                var ngaykham = $(this).val(); // Lấy ngày khám được chọn
+
+                if (mand && ngaykham) { // Kiểm tra nếu bác sĩ và ngày khám được chọn
+                    $.ajax({
+                        url: "/Admin/NguoiDungs/getCaKham", // API lấy ca khám
+                        type: "GET",
+                        data: { mand: mand, ngaykham: ngaykham }, // Gửi mã bác sĩ và ngày khám đến server
+                        success: function (results) {
+                            $('select[name=cakham]').empty(); // Làm trống dropdown ca khám
+                            $('select[name=cakham]').append('<option> Chọn ca khám </option>');
+
+                            if (results.length > 0) {
+                                // Thêm các ca khám vào dropdown
+                                $.each(results, function (index, cakham) {
+                                    $('select[name=cakham]').append('<option value="' + cakham + '">' + cakham + '</option>');
+                                });
+                            } else {
+                                alert("Không có ca khám nào khả dụng trong ngày này.");
+                            }
+                        },
+                        error: function () {
+                            alert("Có lỗi xảy ra khi tải ca khám. Vui lòng thử lại.");
+                        }
+                    });
+                } else {
+                    $('select[name=cakham]').empty(); // Làm trống dropdown nếu không chọn đủ thông tin
+                    $('select[name=cakham]').append('<option> Chọn ca khám </option>');
+                }
+            });
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('button[name="datlich"]').click(function () {
+                var data = {
+                    chinhanh: $('input[name=chinhanh]:checked').val(),
+                    hinhthuc: $('input[name=hinhthuc]:checked').val(),
+                    khoa: $('select[name=khoa]').val(),
+                    bacsi: $('select[name=bacsi]').val(),
+                    ngaykham: $('select[name=ngaykham]').val(),
+                    cakham: $('select[name=cakham]').val(),
+                    mota: $('textarea[name=mota]').val()
+                };
+
+                // Validate client
+                if (!data.chinhanh || !data.hinhthuc || !data.khoa || !data.bacsi
+                    || !data.ngaykham || !data.cakham || !data.mota) {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+
+                $.ajax({
+                    url: "/Lichkham/ActionPostData",
+                    type: "POST",
+                    dataType: "json",
+                    data: data,
+                    success: function (res) {
+                        alert(res.message);
+                        if (res.success && res.redirectUrl) {
+                            window.location.href = res.redirectUrl;
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        console.error(err);
+                        alert("Có lỗi xảy ra. Vui lòng thử lại!");
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}
+else
+{
+    <div>
+        <button type="button" class="btn btn-warning"
+                onclick="location.href='@Url.Action("Create", "LichKham")'">
+            Đặt mới
+        </button>
+        <button type="button" class="btn btn-default"
+                onclick="location.href='@Url.Action("Dangxuly", "LichKham", new { id = u.mabn })'">
+            Đang xác nhận
+        </button>
+        <button type="button" class="btn btn-default"
+                onclick="location.href='@Url.Action("Daxacnhan", "LichKham", new { id = u.mabn })'">
+            Đã xác nhận
+        </button>
+        <button type="button" class="btn btn-default"
+                onclick="location.href='@Url.Action("Datuvanxong", "LichKham", new { id = u.mabn })'">
+            Đã xong
+        </button>
+    </div>
+    <div class="form-horizontal" style=" height: 100%;display: flex;  justify-content: center;">
+        @using (Html.BeginForm("ActionPostData", "LichKham", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="div_booking pb_15" style="width:500px; ">
+                <style>
+                    .gia-scheduler__overlay {
+                        z-index: 9999999 !important;
+                    }
+                </style>
+                <div class="box_dathen" style="min-height: 567px;">
+                    <div class="ta-booking">
+
+                        <div class="ta-frame__header">
+                            <div class="ta-frame__header-title">ĐĂNG KÝ KHÁM BỆNH</div>
+                        </div>
+                        <div class="ta-frame__content">
+                            <!---->
+
+                            <div class="el-form-item">
+                                <label for="vendor" class="el-form-item__label">Chọn địa điểm khám</label>
+                                <div class="el-form-item__content">
+
+
+
+
+                                    @foreach (var item in ViewBag.chinhanh)
+                                    {
+
+                                        if (item == ViewBag.cn)
+                                        {
+                                            <label role="radio" tabindex="0" class="el-radio" style="width:150px;">
+                                                <span class="el-radio__input">
+                                                    <span class="el-radio__inner"></span>
+                                                    <input type="radio" aria-hidden="true" tabindex="-1" autocomplete="off" class="el-radio__original" value="@item" id="@item" name="chinhanh" @*onchange="this.form.submit()"*@>
+                                                </span>
+                                                <span class="el-radio__label"> @item<!----></span>
+                                            </label>}
+                                        else
+                                        {
+                                            <label role="radio" tabindex="0" class="el-radio" style="width:150px;">
+                                                <span class="el-radio__input">
+                                                    <span class="el-radio__inner"></span>
+                                                    <input type="radio" aria-hidden="true" tabindex="-1" autocomplete="off" class="el-radio__original" value="@item" id="@item" name="chinhanh" @*onchange="this.form.submit()"*@>
+                                                </span>
+                                                <span class="el-radio__label"> @item<!----></span>
+
+
+                                            </label>}
+                                    }
+
+                                </div>
+                            </div>
+                            <label for="vendor" class="el-form-item__label">Chọn loại dịch vụ khám</label>
+
+                            <div class="el-form-item__content">
+
+
+                                @foreach (var item in ViewBag.hinhthuc)
+                                {
+
+                                    if (item.Text == ViewBag.ht)
+                                    {
+                                        <label role="radio" tabindex="0" class="el-radio" style="width:150px;">
+                                            <span class="el-radio__input">
+                                                <span class="el-radio__inner"></span>
+                                                <input type="radio" aria-hidden="true" tabindex="-1" autocomplete="off" class="el-radio__original" value="@item.Value" id="@item.Value" name="hinhthuc" checked="checked" @*onchange="this.form.submit()"*@>
+                                            </span>
+                                            <span class="el-radio__label"> @item.Text<!----></span>
+                                        </label>}
+                                    else
+                                    {
+                                        <label role="radio" tabindex="0" class="el-radio" style="width:150px;">
+                                            <span class="el-radio__input">
+                                                <span class="el-radio__inner"></span>
+                                                <input type="radio" aria-hidden="true" tabindex="-1" autocomplete="off" class="el-radio__original" value="@item.Value" id="@item.Value" name="hinhthuc" @*onchange="this.form.submit()"*@>
+                                            </span>
+                                            <span class="el-radio__label"> @item.Text<!----></span>
+
+                                        </label>}
+                                }
+
+                            </div>
+                        </div>
+
+
+                        <label for="vendor" class="el-form-item__label" style="margin-left:10px; color:white;"> Vui lòng chọn địa điểm khám &amp; dịch vụ khám trước</label>
+                        <div class="el-form-item">
+                            <div class="el-form-item__content">
+
+
+                                <div data-v-b270d436="" class="gia-select" style="margin-left:15px">
+                                    <i data-v-b270d436="" class="gia-select__caret el-select__caret el-input__icon el-icon-arrow-down"></i>
+
+                                    <select name="khoa" style="width:470px;" @*onchange="this.form.submit()"*@>
+                                        <option value="" selected disabled style="color:gray;">Chọn chuyên khoa</option>
+                                        @foreach (var item in ViewBag.khoa)
+                                        {
+                                            if (item == ViewBag.k)
+                                            {
+                                                <option value="@item" selected>@item</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item"> @item </option>
+                                            }
+                                        }
+                                    </select>
+
+                                </div>
+                                <br />
+
+                                <div data-v-b270d436="" class="gia-select" style="margin-left:15px">
+                                    <i data-v-b270d436="" class="gia-select__caret el-select__caret el-input__icon el-icon-arrow-down"></i>
+
+                                    <select name="bacsi" style="width:470px;" @*onchange="this.form.submit()"*@>
+                                        <option value="" selected disabled style="color:gray;">Chọn bác sĩ</option>
+                                        @foreach (var item in ViewBag.bacsi)
+                                        {
+
+                                            if (item == ViewBag.bs)
+                                            {
+                                                <option value="@item" selected>@item</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        }
+                                    </select>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+
+                        <form action="">
+                            <div class="el-form-item">
+                                <!---->
+                                <div class="el-form-item__content">
+                                    <div data-v-80145740="" class="gia-scheduler el-input el-input--prefix" style="margin-left:15px">
+                                        <div data-v-80145740="" class="gia-scheduler__input el-input__inner">
+                                            <span data-v-80145740="" class="el-input__prefix">
+                                                <i data-v-80145740="" class="el-input__icon bx bx-calendar"></i>
+
+
+                                                <select name="ngaykham" style="width:470px;" @*onchange="this.form.submit()"*@>
+                                                    <option value="" selected disabled style="color:gray;">Chọn ngày khám </option>
+                                                    @foreach (var item in ViewBag.ngaykham)
+                                                    {
+
+                                                        if (item == ViewBag.nk)
+                                                        {
+                                                            <option value="@item" selected>@item</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item">@item</option>
+                                                        }
+                                                    }
+                                                </select>
+
+                                            </span>
+
+                                        </div><!---->
+                                    </div><!---->
+                                </div>
+                            </div><!---->
+
+                            <br />
+                            <div class="el-form-item">
+                                <!---->
+                                <div class="el-form-item__content">
+                                    <div data-v-80145740="" class="gia-scheduler el-input el-input--prefix" style="margin-left:15px">
+                                        <div data-v-80145740="" class="gia-scheduler__input el-input__inner">
+                                            <span data-v-80145740="" class="el-input__prefix">
+                                                <i data-v-80145740="" class="el-input__icon bx bx-calendar"></i>
+
+                                                <select name="cakham" style="width:470px;" @*onchange="this.form.submit()"*@>
+                                                    <option value="" selected disabled style="color:gray;">Chọn ca khám </option>
+                                                    @foreach (var item in ViewBag.cakham)
+                                                    {
+
+                                                        if (item == ViewBag.ca)
+                                                        {
+                                                            <option value="@item" selected>@item</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item">@item</option>
+                                                        }
+                                                    }
+                                                </select>
+
+                                            </span>
+
+                                        </div><!---->
+                                    </div><!---->
+                                </div>
+                            </div><!---->
+                        </form>
+                    </div>
+                    <br />
+                    <div class="el-form-item is-required">
+                        <label for="note" class="el-form-item__label" style="margin-left:15px; color:white;">Vấn đề sức khỏe cần khám</label>
+                        <div class="el-form-item__content">
+                            <div class="el-textarea" style="width: 100%; color:black; max-width: 500px;">
+                                <textarea name="mota" id="mota" autocomplete="off" rows="4" placeholder="Nhập tình trạng sức khoẻ của bạn, câu hỏi dành cho bác sĩ và các vấn đề sức khỏe cần khám" class="el-textarea__inner" style="min-height: 33px; width:470px; margin-left:15px" @*onchange="this.form.submit()"*@></textarea><!---->
+
+                            </div><!---->
+                        </div>
+                    </div>
+
+                    <br />
+                    <button name="datlich" type="button" class="el-button expanded el-button--primary" style="background: #1f28af;width: 470px; height:100%;color:white; margin-left:15px;" @*onchange="this.form.submit()"*@>
+
+                        <a><span>ĐẶT LỊCH KHÁM →</span></a>
+                    </button>
+
+
+
+
+                </div>
+                <div class="el-loading-mask" style="display: none;">
+                    <div class="el-loading-spinner"><svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg><!----></div>
+                </div>
+
+
+            </div>}
+
+
+    </div>
+}

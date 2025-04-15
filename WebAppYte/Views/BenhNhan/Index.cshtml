@@ -1,0 +1,86 @@
+﻿
+@model IEnumerable<WebAppYte.Models.BenhNhan>
+
+@{ ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h2>Hồ sơ cá nhân</h2>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.tenbn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.sdt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ngaysinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gioitinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tendn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mk)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diachi)
+        </th>
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+
+
+    <td>
+        @Html.DisplayFor(modelItem => item.tenbn)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.sdt)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ngaysinh)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.gioitinh)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tendn)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.mk)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.diachi)
+    </td>
+   
+    <td>
+        <button class="btn-default">
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.mabn })
+        </button>
+
+        <button class="btn-default">
+
+            @Html.ActionLink("Xem chi tiết", "Details", new { id = item.mabn })
+
+        </button>
+
+    </td>
+</tr>}
+
+</table>

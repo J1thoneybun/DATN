@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<WebAppYte.DAO.LichKham>
+@using PagedList.Mvc;
+
+@{ ViewBag.Title = "Kiemtralichhen";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                var userBS = Session["userBS"] as WebAppYte.Models.NguoiDung; }
+
+<hr />
+<h2>DANH SÁCH LỊCH HẸN</h2>
+<hr />
+<h4>
+    <a href="@Url.Action("Lichdangcho", "Bacsi", new { id = userBS.mand })">LỊCH CHƯA XÁC NHẬN</a>&nbsp;||
+    <a href="@Url.Action("Lichdaxacnhan", "Bacsi", new { id = userBS.mand })">LỊCH ĐÃ XÁC NHẬN</a>&nbsp;||
+    <a href="@Url.Action("Kiemtralichhen", "Bacsi", new { id = userBS.mand})">TẤT CẢ LỊCH HẸN</a>
+</h4>
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Người đặt lịch
+        </th>
+        <th>
+            Ngày sinh
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+       
+        <th>
+            Nội dung cần tư vấn
+        </th>
+      
+        <th>
+            Ngày khám
+        </th>
+     
+        <th>
+            Ca khám
+        </th>
+        <th>
+            Hình thức
+        </th>
+        <th>
+            Trạng thái
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.tenbn)
+    </td>
+    <td>
+        @item.ngaysinh.ToString("dd/MM/yyyy")
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.sdt)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.mota)
+    </td>
+
+    <td>
+        @item.ngaykham.ToString("dd/MM/yyyy")
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ca)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.hinhthuc)
+    </td>
+    <td>
+        @{ if (@item.trangthai == 0)
+            {
+<h5 style="color:red">Đang chờ xác nhận. </h5> }
+else if (@item.trangthai == 1)
+{
+<h5 style="color:orangered">Đã xác nhận lịch </h5> }
+else if (@item.trangthai == 2)
+{
+<h5 style="color:gold">Đã tư vấn xong. </h5> }
+else
+{
+<h5 style="color:red">Lỗi </h5> } }
+    </td>
+
+    <td>
+        <button class="">
+            @Html.ActionLink("Cập nhật trạng thái", "Xacnhanlichhen", new { id = item.madat })
+        </button>
+    </td>
+</tr>
+}
+</table>
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Kiemtralichhen",
+            new { page }))

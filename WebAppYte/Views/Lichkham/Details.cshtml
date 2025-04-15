@@ -1,0 +1,80 @@
+﻿
+@model WebAppYte.DAO.LichKham
+
+@{ ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">LỊCH HẸN</span></p></nav>
+        </div>
+
+    </div>
+</div>
+
+<h2>Details</h2>
+
+<div>
+    <h4>LichKham</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên người đặt
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenbn)
+        </dd>
+
+        <dt>
+            Tên bác sĩ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hoten)
+        </dd>
+
+        <dt>
+            Lý do
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mota)
+        </dd>
+
+        <dt>
+            Ngày hẹn
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngaykham)
+        </dd>
+        <dt>
+            Ca khám
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ca)
+        </dd>
+
+
+        <dt>
+            Hình thức
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hinhthuc)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.madat}) 
+    @Html.ActionLink("Back to List", "Index")
+</p>

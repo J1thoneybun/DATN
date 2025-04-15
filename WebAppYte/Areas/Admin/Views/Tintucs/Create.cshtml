@@ -1,0 +1,162 @@
+﻿@model WebAppYte.Models.BaiViet
+
+<script src="~/Common/ckeditor/ckeditor.js"></script>
+<script src="~/Common/ckfinder/ckfinder.js"></script>
+<script src="~/Scripts/jquery-3.4.1.slim.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Thêm mới bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2 class="text-center">THÊM MỚI BÀI VIẾT</h2>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <!-- Tiêu đề -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.tieude, "Tiêu đề", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tieude, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "form-control",
+                    placeholder = "Nhập tiêu đề bài viết",
+                    required = "required"
+                }
+            })
+            @Html.ValidationMessageFor(model => model.tieude, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Nội dung -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.noidung, "Nội dung", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.noidung, new
+            {
+                @class = "form-control",
+                placeholder = "Nhập nội dung bài viết",
+                required = "required"
+            })
+            @Html.ValidationMessageFor(model => model.noidung, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Hình ảnh -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.hinhanh, "Hình ảnh", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="input-group">
+                @Html.EditorFor(model => model.hinhanh, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                        placeholder = "Đường dẫn hình ảnh",
+                        required = "required"
+                    }
+                })
+                <span class="input-group-btn">
+                    <button id="chonDuongDanAnh" type="button" class="btn btn-info">
+                        <i class="fas fa-image"></i> Chọn ảnh
+                    </button>
+                </span>
+            </div>
+            @Html.ValidationMessageFor(model => model.hinhanh, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Mô tả -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.mota, "Mô tả ngắn", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.mota, new
+            {
+                @class = "form-control",
+                rows = "3",
+                placeholder = "Nhập mô tả ngắn cho bài viết",
+                required = "required",
+                maxlength = "200"
+            })
+            <small class="form-text text-muted">Tối đa 200 ký tự</small>
+            @Html.ValidationMessageFor(model => model.mota, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Thể loại -->
+    <div class="form-group">
+        @Html.LabelFor(model => model.maloai, "Thể loại", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("maloai", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.maloai, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- Nút submit -->
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Lưu bài viết
+            </button>
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</div>
+}
+
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $("#chonDuongDanAnh").click(function () {
+            var ckfiner = new CKFinder();
+            ckfiner.selectActionFunction = function (fileUrl) {
+                $("#hinhanh").val(fileUrl);
+            };
+            ckfiner.popup();
+        });
+
+        // Initialize CKEditor with validation
+        CKEDITOR.replace('noidung', {
+            language: 'vi',
+            extraPlugins: 'notification',
+            on: {
+                instanceReady: function (evt) {
+                    evt.editor.on('required', function (evt) {
+                        this.showNotification('Vui lòng nhập nội dung bài viết', 'warning');
+                        evt.cancel();
+                    });
+                }
+            }
+        });
+
+        // Custom validation for CKEditor content
+        $.validator.setDefaults({
+            ignore: []
+        });
+
+        // Validate before form submission
+        $('form').submit(function () {
+            var editorContent = CKEDITOR.instances['noidung'].getData();
+            if (editorContent.trim() === '') {
+                alert('Vui lòng nhập nội dung bài viết');
+                return false;
+            }
+            return true;
+        });
+    });
+</script>

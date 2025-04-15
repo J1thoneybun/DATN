@@ -1,0 +1,60 @@
+﻿﻿
+@model WebAppYte.DAO.TTNguoiDung
+
+@{ ViewBag.Title = "DatLichHen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style type="text/css">
+    /*    td {
+        text-align: center
+    }*/
+
+    th {
+        text-align: center
+    }
+
+    .tenBV {
+        color: orangered;
+        font-size: x-large
+    }
+</style>
+
+
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 100%; height: 515px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">CHUYÊN GIA - BÁC SĨ</span></p></nav>
+        </div>
+        <img src="~/images/images/banner-chuyen-gia-bac-si-desk.jpg" style="position:relative; width:100%; height:auto; display:block !important; top:160px; left:0px;">
+    </div>
+
+</div>
+
+
+
+<div class="col-md-8 col-sm-12 col-xs-12 noright" style="width:650px;">
+    <div class="info_chuyengia div_flex_column mb_center mb_15mb row div_flex_n">
+        <div class="col-sm-6 col-xs-12 item img_cgia"><img alt="@Model.hoten" class="thumb_cgia_detail " loading="lazy" src="~/images/images/@Model.anh" style="width:300px;"></div>
+        <div class="div_info item col-sm-6 col-xs-12">
+            <h1 class="text-uppercase cl_brand sz_21">@Model.hoten</h1>
+            @Model.chucvu<div class="sss"></div><div>Phòng khám Linh Đàm @Model.tenchinhanh</div><br />
+            <div>
+                <div class="" data-cgia="cgia_thanhtuu">HỌC HÀM: @Model.hocham</div>
+                <div class="" data-cgia="cgia_thanhtuu">HỌC VỊ: @Model.hocvi</div>
+                GIỚI THIỆU
+                <div class="" style="text-align: justify; font-size:15px;  font-style: italic;">@Model.gioithieu</div>
+
+            </div>
+            <div class="icon_cgia">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-8 col-sm-12 col-xs-12 noleft" style="left:100px;width:400px;">
+    @Html.Action("Comment", "BacSi", new { id = @Model.mand })
+</div>

@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div id="nivoslider" class="slides nivoSlider">
+        <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+        <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+            <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:130px; left:0px;">
+                <nav aria-label="breadcrumbs" class="rank-math-breadcrumb">
+                    <p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">THÀNH CÔNG</span></p>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="alert alert-success mt-3 text-center" style="padding: 30px;">
+        <h2 class="text-success">✔ Mật khẩu đã được đặt lại thành công!</h2>
+        <p>Bạn có thể đăng nhập với mật khẩu mới ngay bây giờ.</p>
+        <a href="@Url.Action("DangNhap", "Home")" class="btn btn-danger mt-3">Đăng nhập</a>
+    </div>
+</div>

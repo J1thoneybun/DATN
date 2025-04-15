@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebAppYte.Models.BenhAn>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>QUẢN LÝ BỆNH ÁN</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-success" })
+    </div>
+    <div class="col-md-6 text-right">
+        @Html.ActionLink("Xuất PDF", "ExportPdfBenhAn", "Reports", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Tiêu đề</th>
+            <th>Bệnh nhân</th>
+            <th>Bác sĩ</th>
+            <th>Ngày khám</th>
+            <th>Giờ khám</th>
+            <th>Chuẩn đoán</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.maba)</td>
+                <td>@Html.DisplayFor(modelItem => item.tieude)</td>
+                <td>@Html.DisplayFor(modelItem => item.benhnhan.tenbn)</td>
+                <td>@Html.DisplayFor(modelItem => item.bacsi.hoten)</td>
+                <td>@item.ngaykham.ToString("dd/MM/yyyy")</td>
+                <td>@item.giokham.ToString("HH:mm")</td>
+                <td>@Html.DisplayFor(modelItem => item.chuandoan)</td>
+                <td>
+                    <div class="btn-group">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.maba }, new { @class = "btn btn-sm btn-warning" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.maba }, new { @class = "btn btn-sm btn-info" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.maba }, new { @class = "btn btn-sm btn-danger" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

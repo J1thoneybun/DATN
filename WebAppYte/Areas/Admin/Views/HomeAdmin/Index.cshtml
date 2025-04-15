@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+@using WebAppYte.Models
+@{
+    var u = Session["userAdmin"] as WebAppYte.Models.NguoiDung;
+}
+<br />
+@{
+    if (u != null)
+    {
+        <h3>Trang quản lý Admin</h3>
+        <br />
+    }
+    else
+    {
+        <h3> <a href="/Home/Dangnhap">Đăng nhập ngay </a> </h3>
+    }
+
+
+
+}
+
+
+

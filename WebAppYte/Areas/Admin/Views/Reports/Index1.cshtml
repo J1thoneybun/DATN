@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Reports Index1";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<div id="rating-chart" style="width: 100%; height: 400px;"></div>
+<div style="text-align: center; margin-top: 20px;">
+    <span id="tong" style="font-size: 20px; font-weight: bold;"></span>
+</div>
+@section Scripts{
+    <script src="~/Scripts/echarts.min.js"></script>
+    <script>
+        // Lấy dữ liệu từ ViewBag
+        var tong = @Html.Raw(Json.Encode(ViewBag.Tong));
+        var oneStar = @Html.Raw(Json.Encode(ViewBag.OneStar));
+        var twoStar = @Html.Raw(Json.Encode(ViewBag.TwoStar));
+        var threeStar = @Html.Raw(Json.Encode(ViewBag.ThreeStar));
+        var fourStar = @Html.Raw(Json.Encode(ViewBag.FourStar));
+        var fiveStar = @Html.Raw(Json.Encode(ViewBag.FiveStar));
+
+        document.getElementById('tong').innerText = 'Tổng Số Đánh Giá: ' + tong;
+
+        // Kiểm tra dữ liệu đã được truyền đúng chưa
+        //console.log(tong);
+        //console.log(oneStar);
+        //console.log(twoStar);
+        //console.log(threeStar);
+        //console.log(fourStar);
+        //console.log(fiveStar);
+
+        // Khởi tạo biểu đồ
+        var chartDom = document.getElementById('rating-chart');
+        var myChart = echarts.init(chartDom);
+
+        // Cấu hình biểu đồ dạng pie
+        var option = {
+            title: {
+                text: 'Thống Kê Đánh Giá',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['Tổng', 'Rất không hài lòng', 'Không hài lòng', 'Bình thường', 'Hài lòng', 'Rất hài lòng']
+            },
+            series: [
+                {
+                    name: 'Mức độ hài lòng:',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: oneStar, name: 'Rất không hài lòng' },
+                        { value: twoStar, name: 'Không hài lòng' },
+                        { value: threeStar, name: 'Bình thường' },
+                        { value: fourStar, name: 'Hài lòng' },
+                        { value: fiveStar, name: 'Rất hài lòng' }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // Hiển thị biểu đồ
+        myChart.setOption(option);
+    </script>
+}

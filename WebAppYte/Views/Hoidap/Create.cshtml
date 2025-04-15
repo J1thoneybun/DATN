@@ -1,0 +1,109 @@
+﻿@model WebAppYte.Models.HoiDap
+@using WebAppYte.Models
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Lấy thông tin người dùng hiện tại
+    var username = User.Identity.Name;
+
+    // Khai báo dbContext
+    var db = new modelWeb();
+    var currentUser = db.BenhNhans.FirstOrDefault(b => b.mabn.ToString() == username || (b.tendn != null && b.tendn == username));
+}
+
+<style type="text/css">
+    .form-control-static {
+        padding: 6px 12px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        min-height: 34px;
+        display: flex;
+        align-items: center;
+    }
+
+    .nivoSlider {
+        margin-bottom: 20px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    #hoi {
+        min-height: 150px;
+    }
+</style>
+
+<br />
+<div id="nivoslider" class="slides nivoSlider">
+    <!-- Phần slider giữ nguyên -->
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="float:left; width: 60%;">
+        <h3 style="color:orangered">Thêm mới câu hỏi</h3>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-3">Người hỏi</label>
+            <div class="col-md-9">
+                <p class="form-control-static">
+                    <i class="fas fa-user" style="margin-right:5px;"></i>
+                    @ViewBag.tenbn
+                </p>
+                @* hidden field để giữ lại mabn *@
+                @Html.Hidden("mabn", (int)ViewBag.mabn)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.hoi, "Nội dung câu hỏi", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.hoi, new
+                {
+                    @class = "form-control",
+                    rows = "8",
+                    placeholder = "Nhập nội dung câu hỏi của bạn...",
+                    required = "required"
+                })
+                @Html.ValidationMessageFor(model => model.hoi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-paper-plane" style="margin-right: 5px;"></i>
+                    Gửi câu hỏi
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            // Kiểm tra nếu chưa đăng nhập
+
+
+            // Tự động thêm ngày hỏi là ngày hiện tại
+            $('form').submit(function () {
+                var now = new Date();
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'ngayhoi',
+                    value: now.toISOString()
+                }).appendTo('form');
+            });
+        });
+    </script>
+}

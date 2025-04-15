@@ -1,0 +1,90 @@
+﻿@model WebAppYte.Models.DangNhap
+
+
+@{ ViewBag.Title = "Dangnhap";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                var nd = Session["benhnhan"] as WebAppYte.Models.BenhNhan; }
+<style type="text/css">
+ 
+
+    .h5fail {
+        color: red;
+    }
+</style>
+
+
+
+
+<div class="col-md-12">
+    <div id="nivoslider" class="slides nivoSlider">
+
+        <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+        <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+            <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:130px; left:0px;">
+                <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">ĐĂNG NHẬP</span></p></nav>
+            </div>
+
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Dangnhap", "Home", FormMethod.Post))
+    {
+                @Html.AntiForgeryToken()
+
+                <center>
+           
+                        <div class="form-horizontal">
+
+                            @{ if (nd == null)
+                                {
+                                   <div class="text-center">
+                                       <h1 class="div_head text-center cl_head text-uppercase font_hel sz_24 mb_15  pb_15">
+                                             Đăng nhập
+                                       </h1>
+                                 </div> }
+                                        else
+                                        {
+                        <h3> Chúc mừng @nd.tendn đăng ký thành công. Đăng nhập ngay.</h3> } }
+
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            <h4> <label class=" " for="tendn">Tên đăng nhập</label></h4>
+                            <div class="" style="width:17%;">
+                                @Html.EditorFor(model => model.tendn, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.tendn, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <h4><label class="" for="mk">Mật khẩu</label></h4>
+                            <div class="">
+                                @Html.PasswordFor(model => model.mk, new { htmlAttributes = new { @class = "" } })
+                                @Html.ValidationMessageFor(model => model.mk, "", new { @class = "" })
+                            </div>
+                        </div>
+                            <h5 class="h5fail">@ViewBag.Fail</h5>
+
+                            <div class="form-group">
+                                <div>
+                                    <input type="submit" value="Đăng nhập" class="btn btn-success" />
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                Bạn chưa có tài khoản?  @Html.ActionLink("ĐĂNG KÝ NGAY", "Dangky")
+                                <br />
+                                Bạn quên mật khẩu ?  @Html.ActionLink("KHÔI PHỤC LẠI", "QuenMatKhau")
+                            </div>
+                        </div>
+
+               
+                </center>}
+</div>
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Quên mật khẩu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Quên mật khẩu</h2>
+<p>Vui lòng nhập email để khôi phục mật khẩu.</p>
+@{
+    ViewBag.Title = "Quên mật khẩu";
+}
+
+<h2>Quên mật khẩu</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <label for="email">Email đã đăng ký</label>
+        <input type="email" name="email" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info mt-3">@ViewBag.Message</div>
+}
+
+

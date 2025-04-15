@@ -1,0 +1,93 @@
+﻿@model IEnumerable<WebAppYte.Models.NguoiDung>
+
+@{ ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml"; }
+<br />
+<h2>QUẢN LÝ BÁC SĨ</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <p>
+            @Html.ActionLink("Thêm mới", "Create")
+        </p>
+    </div>
+    <div class="col-md-8">
+
+        <form method="get" action="@Url.Action("Search", "QuanTris")">
+            <div class="input-group mb-3">
+                <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm..."
+                       value="@ViewBag.SearchTerm" />
+                <button type="submit" class="btn btn-primary">Tìm</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>SĐT</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Chức vụ</th>
+            <th>Khoa</th>
+            <th>Tên đăng nhập</th>
+            <th>Mật khẩu</th>
+            <th>Ảnh</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.hoten
+                </td>
+                <td>
+                    @item.ngaysinh.Value.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gioitinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sdt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.diachi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.chucvu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Khoa.tenkhoa)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.tendn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mk)
+                </td>
+                <td>
+                    <img class="img-responsive" loading="lazy" src="~/images/images/@item.anh" style="width:150px;height:150px;" />
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.mand }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.mand }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.mand })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,80 @@
+﻿@model WebAppYte.Models.HoiDap
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+          Người hỏi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BenhNhan.tenbn)
+        </dd>
+
+        <dt>
+         Người trả lời
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiDung.tendn)
+        </dd>
+
+        <dt>
+          Câu hỏi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hoi)
+        </dd>
+
+        <dt>
+         Trả lời
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dap)
+        </dd>
+
+        <dt>
+            Ngày hỏi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngayhoi)
+        </dd>
+
+        <dt>
+           Ngày trả lời
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ngaytl)
+        </dd>
+
+        <dt>
+          Trạng thái
+        </dt>
+
+        <dd>
+            @{ if (Model.trangthai == 0)
+                            {
+                <h5 style="color:red">Chưa trả lời</h5> }
+                            if (Model.trangthai == 1)
+                            {
+                <h5 style="color:red">Đã trả lời</h5> } }
+        </dd>
+
+    </dl>
+</div>
+<p>
+   
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,82 @@
+﻿
+@model WebAppYte.Models.BenhNhan
+
+@{ ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+<link href="~/Common/css/hoso.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<br />
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:180px; left:200px;">
+            <nav aria-label="breadcrumbs" class="rank-math-breadcrumb"><p><a href="/Home/Index">TRANG CHỦ</a><span class="separator"> &gt; </span><span class="last">HỒ SƠ CÁ NHÂN</span></p></nav>
+        </div>
+
+    </div>
+</div>
+<div class="text-center">
+    <h1 class="div_head text-center cl_head text-uppercase font_hel sz_24 mb_15  pb_15">
+        HỒ SƠ CÁ NHÂN
+    </h1>
+</div>
+<br />
+<br />
+<div class="">
+    <div class="col-md-6">
+        <img class="imgavt" src="~/Common/images/anhbenhnhan.png" width="170" height="170" />
+        &nbsp;
+        <div class="divInfo">
+            Họ tên : <b> @Html.DisplayFor(model => model.tenbn)</b>
+            <br />
+            Tài khoản: @Html.DisplayFor(model => model.tendn)
+            <br />
+            Mật khẩu : @Html.DisplayFor(model => model.mk)
+            <br />
+            Giới tính :  @Html.DisplayFor(model => model.gioitinh)
+            <br />
+            Ngày sinh :  @Model.ngaysinh.Value.ToString("dd-MM-yyyy")
+            <br />
+            <button class="btn-warning">
+                @Html.ActionLink("Cập nhật", "Edit", new { id = Model.mabn })
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="divInfo">
+
+            <span class="material-icons">wifi_calling</span> &nbsp; Số điện thoại :  @Html.DisplayFor(model => model.sdt)
+            <br />
+            <span class="material-icons">
+                email
+            </span> &nbsp; Email :  @Html.DisplayFor(model => model.email)
+            <br />
+            <span class="material-icons">
+                home
+            </span> &nbsp;
+            Địa chỉ : @Html.DisplayFor(model => model.diachi)
+            <br />
+
+        </div>
+
+    </div>
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<center>
+
+    <h4><a href="@Url.Action("Index", "Hoidap", new { id = @ViewBag.id })">GỬI CÂU HỎI CHO BÁC SĨ</a></h4>
+</center>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

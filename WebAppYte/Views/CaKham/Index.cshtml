@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<WebAppYte.Models.CaKham>
+@using PagedList.Mvc;
+
+@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userBS = Session["userBS"] as WebAppYte.Models.NguoiDung;}
+
+<div id="nivoslider" class="slides nivoSlider">
+
+    <div class="nivo-directionNav"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div>
+    <div class="nivo-slice" name="0" style="left: 0px; width: 1530px; height: 160px; opacity: 1; overflow: hidden;">
+        <div class="col-sm-12" style="position:absolute; width:1519px; height:auto; display:block !important; top:165px; left:170px;">
+
+            <h2>Ca khám</h2>
+        </div>
+
+    </div>
+
+</div>
+
+<p>
+    <h4><button class="btn-default">@Html.ActionLink("Thêm ca khám", "Create", new { id = userBS.mand })</button></h4>
+</p>
+<table class="table table-bordered">
+    <tr>
+
+        <th>
+            Ngày khám
+        </th>
+        <th>
+            Ca khám
+        </th>
+        @*<th>
+           Nội dung
+        </th>*@
+        <th>
+            Hình thức
+        </th>
+        <th>
+           
+        </th>
+        <th>
+          
+        </th>
+
+
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @item.ngaykham.Value.ToString("dd/MM/yyyy")
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.ca)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.hinhthuc)
+    </td>
+
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.maca })
+
+
+    </td>
+
+    <td>
+        @Html.ActionLink("Delete", "Delete", new { id = item.maca })
+
+
+    </td>
+</tr>}
+
+</table>
+
+  Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page }))
+
